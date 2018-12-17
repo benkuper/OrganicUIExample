@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<JUCERPROJECT id="PYFe8Z" name="OrganicUIExample" projectType="guiapp" jucerVersion="5.4.1"
+              headerPath="../../Source">
+  <MAINGROUP id="Qom9Cx" name="OrganicUIExample">
+    <GROUP id="{F4081600-DFE3-1A58-FEAB-83873C5308F8}" name="Source">
+      <GROUP id="{FF882C41-FBAA-4F6E-EFBB-CAB18782498B}" name="ExampleManager">
+        <FILE id="bBHwgg" name="ExampleManagerUI.cpp" compile="1" resource="0"
+              file="Source/ExampleManagerUI.cpp"/>
+        <FILE id="Yn3cWc" name="ExampleManagerUI.h" compile="0" resource="0"
+              file="Source/ExampleManagerUI.h"/>
+        <FILE id="JXOlpy" name="ExampleItem.cpp" compile="1" resource="0" file="Source/ExampleItem.cpp"/>
+        <FILE id="prBkjm" name="ExampleItem.h" compile="0" resource="0" file="Source/ExampleItem.h"/>
+        <FILE id="PZojuk" name="ExampleManager.cpp" compile="1" resource="0"
+              file="Source/ExampleManager.cpp"/>
+        <FILE id="pALWDy" name="ExampleManager.h" compile="0" resource="0"
+              file="Source/ExampleManager.h"/>
+      </GROUP>
+      <GROUP id="{44AFC7D3-8A72-6C3B-68BA-62FCCE9A2CB3}" name="Automation">
+        <FILE id="U5JzKf" name="AutomationLayer.cpp" compile="1" resource="0"
+              file="Source/AutomationLayer.cpp"/>
+        <FILE id="sYdxSM" name="AutomationLayer.h" compile="0" resource="0"
+              file="Source/AutomationLayer.h"/>
+        <FILE id="tD3JQC" name="AutomationLayerTimeline.cpp" compile="1" resource="0"
+              file="Source/AutomationLayerTimeline.cpp"/>
+        <FILE id="bwXzKw" name="AutomationLayerTimeline.h" compile="0" resource="0"
+              file="Source/AutomationLayerTimeline.h"/>
+      </GROUP>
+      <GROUP id="{77F55D29-FFA7-5075-C3A0-8FDF1D2CD066}" name="Keyframe">
+        <GROUP id="{F2F6FFC4-0CFE-2F3C-15F5-AE58EC2A7D6B}" name="AnimatedParameter">
+          <FILE id="DoAnCo" name="AnimatedParameterManager.cpp" compile="1" resource="0"
+                file="Source/Parameters/AnimatedParameter/AnimatedParameterManager.cpp"/>
+          <FILE id="ddiP0w" name="AnimatedParameterManager.h" compile="0" resource="0"
+                file="Source/Parameters/AnimatedParameter/AnimatedParameterManager.h"/>
+          <GROUP id="{FB0F58C0-8D9D-69EB-30D5-700072E48EED}" name="Block">
+            <GROUP id="{18742F48-C2B8-5F4B-CD4D-896E187EAC16}" name="Track">
+              <GROUP id="{BF83CEC7-975A-4D3D-2C31-22B45ACC3924}" name="ui">
+                <FILE id="MPDfQX" name="AnimatedParameterContainerTrackUI.cpp" compile="1"
+                      resource="0" file="Source/Parameters/AnimatedParameter/Block/Track/ui/AnimatedParameterContainerTrackUI.cpp"/>
+                <FILE id="qttXh5" name="AnimatedParameterContainerTrackUI.h" compile="0"
+                      resource="0" file="Source/Parameters/AnimatedParameter/Block/Track/ui/AnimatedParameterContainerTrackUI.h"/>
+                <FILE id="RESsgd" name="AnimatedParameterTrackUI.cpp" compile="1" resource="0"
+                      file="Source/Parameters/AnimatedParameter/Block/Track/ui/AnimatedParameterTrackUI.cpp"/>
+                <FILE id="ALhTOp" name="AnimatedParameterTrackUI.h" compile="0" resource="0"
+                      file="Source/Parameters/AnimatedParameter/Block/Track/ui/AnimatedParameterTrackUI.h"/>
+              </GROUP>
+              <FILE id="XE0Vxo" name="AnimatedParameterContainerTrack.cpp" compile="1"
+                    resource="0" file="Source/Parameters/AnimatedParameter/Block/Track/AnimatedParameterContainerTrack.cpp"/>
+              <FILE id="bqI2Xr" name="AnimatedParameterContainerTrack.h" compile="0"
+                    resource="0" file="Source/Parameters/AnimatedParameter/Block/Track/AnimatedParameterContainerTrack.h"/>
+              <FILE id="mAVNfz" name="AnimatedParameterTrack.cpp" compile="1" resource="0"
+                    file="Source/Parameters/AnimatedParameter/Block/Track/AnimatedParameterTrack.cpp"/>
+              <FILE id="dgpNhE" name="AnimatedParameterTrack.h" compile="0" resource="0"
+                    file="Source/Parameters/AnimatedParameter/Block/Track/AnimatedParameterTrack.h"/>
+            </GROUP>
+            <GROUP id="{3694AF2F-DDFC-7F5F-547B-A74564EFABF7}" name="ui">
+              <FILE id="kdAcr2" name="ParametersLayerBlockManagerUI.cpp" compile="1"
+                    resource="0" file="Source/Parameters/AnimatedParameter/Block/ui/ParametersLayerBlockManagerUI.cpp"/>
+              <FILE id="sIL1eG" name="ParametersLayerBlockManagerUI.h" compile="0"
+                    resource="0" file="Source/Parameters/AnimatedParameter/Block/ui/ParametersLayerBlockManagerUI.h"/>
+              <FILE id="x4Yixq" name="ParametersLayerBlockUI.cpp" compile="1" resource="0"
+                    file="Source/Parameters/AnimatedParameter/Block/ui/ParametersLayerBlockUI.cpp"/>
+              <FILE id="HpArsw" name="ParametersLayerBlockUI.h" compile="0" resource="0"
+                    file="Source/Parameters/AnimatedParameter/Block/ui/ParametersLayerBlockUI.h"/>
+            </GROUP>
+            <FILE id="WKb7XB" name="ParametersLayerBlock.cpp" compile="1" resource="0"
+                  file="Source/Parameters/AnimatedParameter/Block/ParametersLayerBlock.cpp"/>
+            <FILE id="Ng0gkS" name="ParametersLayerBlock.h" compile="0" resource="0"
+                  file="Source/Parameters/AnimatedParameter/Block/ParametersLayerBlock.h"/>
+            <FILE id="GgyS8P" name="ParametersLayerBlockManager.cpp" compile="1"
+                  resource="0" file="Source/Parameters/AnimatedParameter/Block/ParametersLayerBlockManager.cpp"/>
+            <FILE id="VHMdpy" name="ParametersLayerBlockManager.h" compile="0"
+                  resource="0" file="Source/Parameters/AnimatedParameter/Block/ParametersLayerBlockManager.h"/>
+          </GROUP>
+          <GROUP id="{B5C66B63-C920-1411-0798-53233B956CBB}" name="ui">
+            <FILE id="jax470" name="AnimatedParameterContainerManagerUI.cpp" compile="1"
+                  resource="0" file="Source/Parameters/AnimatedParameter/ui/AnimatedParameterContainerManagerUI.cpp"/>
+            <FILE id="TVeLSi" name="AnimatedParameterContainerManagerUI.h" compile="0"
+                  resource="0" file="Source/Parameters/AnimatedParameter/ui/AnimatedParameterContainerManagerUI.h"/>
+            <FILE id="OH9CcP" name="AnimatedParameterContainerUI.cpp" compile="1"
+                  resource="0" file="Source/Parameters/AnimatedParameter/ui/AnimatedParameterContainerUI.cpp"/>
+            <FILE id="tDHNx0" name="AnimatedParameterContainerUI.h" compile="0"
+                  resource="0" file="Source/Parameters/AnimatedParameter/ui/AnimatedParameterContainerUI.h"/>
+            <FILE id="mBt1BD" name="AnimatedParameterManagerUI.cpp" compile="1"
+                  resource="0" file="Source/Parameters/AnimatedParameter/ui/AnimatedParameterManagerUI.cpp"/>
+            <FILE id="LjVwPI" name="AnimatedParameterManagerUI.h" compile="0" resource="0"
+                  file="Source/Parameters/AnimatedParameter/ui/AnimatedParameterManagerUI.h"/>
+            <FILE id="jXCZrf" name="AnimatedParameterUI.cpp" compile="1" resource="0"
+                  file="Source/Parameters/AnimatedParameter/ui/AnimatedParameterUI.cpp"/>
+            <FILE id="LqHIT8" name="AnimatedParameterUI.h" compile="0" resource="0"
+                  file="Source/Parameters/AnimatedParameter/ui/AnimatedParameterUI.h"/>
+          </GROUP>
+          <FILE id="RqjNKZ" name="AnimatedParameter.cpp" compile="1" resource="0"
+                file="Source/Parameters/AnimatedParameter/AnimatedParameter.cpp"/>
+          <FILE id="NyEgAD" name="AnimatedParameter.h" compile="0" resource="0"
+                file="Source/Parameters/AnimatedParameter/AnimatedParameter.h"/>
+          <FILE id="qjfIQx" name="AnimatedParameterContainer.cpp" compile="1"
+                resource="0" file="Source/Parameters/AnimatedParameter/AnimatedParameterContainer.cpp"/>
+          <FILE id="wrXCFL" name="AnimatedParameterContainer.h" compile="0" resource="0"
+                file="Source/Parameters/AnimatedParameter/AnimatedParameterContainer.h"/>
+          <FILE id="Pzm0uU" name="AnimatedParameterContainerManager.cpp" compile="1"
+                resource="0" file="Source/Parameters/AnimatedParameter/AnimatedParameterContainerManager.cpp"/>
+          <FILE id="ruq5IM" name="AnimatedParameterContainerManager.h" compile="0"
+                resource="0" file="Source/Parameters/AnimatedParameter/AnimatedParameterContainerManager.h"/>
+        </GROUP>
+        <GROUP id="{19315F13-AA37-ED58-36A3-6C095788BE26}" name="ui">
+          <FILE id="AbwuPQ" name="ParametersLayerPanel.cpp" compile="1" resource="0"
+                file="Source/Parameters/ui/ParametersLayerPanel.cpp"/>
+          <FILE id="gPlmGT" name="ParametersLayerPanel.h" compile="0" resource="0"
+                file="Source/Parameters/ui/ParametersLayerPanel.h"/>
+          <FILE id="P1UKNA" name="ParametersLayerTimeline.cpp" compile="1" resource="0"
+                file="Source/Parameters/ui/ParametersLayerTimeline.cpp"/>
+          <FILE id="PEmubu" name="ParametersLayerTimeline.h" compile="0" resource="0"
+                file="Source/Parameters/ui/ParametersLayerTimeline.h"/>
+        </GROUP>
+        <FILE id="uFIMgK" name="ParametersLayer.cpp" compile="1" resource="0"
+              file="Source/Parameters/ParametersLayer.cpp"/>
+        <FILE id="qBRov2" name="ParametersLayer.h" compile="0" resource="0"
+              file="Source/Parameters/ParametersLayer.h"/>
+      </GROUP>
+      <FILE id="vqHnAF" name="ExampleEngine.cpp" compile="1" resource="0"
+            file="Source/ExampleEngine.cpp"/>
+      <FILE id="d8pg2B" name="ExampleEngine.h" compile="0" resource="0" file="Source/ExampleEngine.h"/>
+      <FILE id="KYFxK7" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
+      <FILE id="MfhjNL" name="MainComponent.cpp" compile="1" resource="0"
+            file="Source/MainComponent.cpp"/>
+      <FILE id="jsEXll" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
+    </GROUP>
+  </MAINGROUP>
+  <EXPORTFORMATS>
+    <VS2017 targetFolder="Builds/VisualStudio2017">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug"/>
+        <CONFIGURATION isDebug="0" name="Release"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_core" path="D:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="D:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="D:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="D:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="D:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="D:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_cryptography" path="D:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_video" path="D:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_opengl" path="D:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="D:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="D:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="D:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="D:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_organicui" path="D:/Documents/Perso/Projects/JUCE Modules"/>
+        <MODULEPATH id="juce_osc" path="D:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_timeline" path="D:/Documents/Perso/Projects/JUCE Modules"/>
+        <MODULEPATH id="juce_audio_utils" path="D:/Softwares/JUCE/modules"/>
+      </MODULEPATHS>
+    </VS2017>
+  </EXPORTFORMATS>
+  <MODULES>
+    <MODULE id="juce_audio_basics" showAllCode="0" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_audio_devices" showAllCode="0" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_audio_formats" showAllCode="0" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_audio_processors" showAllCode="0" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_audio_utils" showAllCode="0" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_core" showAllCode="0" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_cryptography" showAllCode="0" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_data_structures" showAllCode="0" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_events" showAllCode="0" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_graphics" showAllCode="0" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_gui_basics" showAllCode="0" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_gui_extra" showAllCode="0" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_opengl" showAllCode="0" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_organicui" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_osc" showAllCode="0" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_timeline" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_video" showAllCode="0" useLocalCopy="0" useGlobalPath="0"/>
+  </MODULES>
+  <LIVE_SETTINGS>
+    <WINDOWS/>
+  </LIVE_SETTINGS>
+  <JUCEOPTIONS/>
+</JUCERPROJECT>
