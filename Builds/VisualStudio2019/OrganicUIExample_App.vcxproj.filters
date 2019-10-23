@@ -233,6 +233,21 @@
     <Filter Include="JUCE Modules\juce_organicui">
       <UniqueIdentifier>{5F63D43A-3BA8-5209-9971-62F87C2979FE}</UniqueIdentifier>
     </Filter>
+    <Filter Include="JUCE Modules\juce_quickjs\libs\Linux\armv8">
+      <UniqueIdentifier>{0CAE1FFD-768D-2928-9DBC-E43509154D86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_quickjs\libs\Linux">
+      <UniqueIdentifier>{727ED0E9-742B-139F-9ADB-82887A3001A9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_quickjs\libs">
+      <UniqueIdentifier>{9107648A-D479-0EB7-CF0F-D017A38F8A9D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_quickjs\quickjs">
+      <UniqueIdentifier>{0E71E613-6EA2-F485-506C-41D378C669D3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_quickjs">
+      <UniqueIdentifier>{3F372E9F-1993-7BDC-E1F3-664F2ECC29D3}</UniqueIdentifier>
+    </Filter>
     <Filter Include="JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode">
       <UniqueIdentifier>{4A208D7E-781B-FBFA-1443-7728B2940D57}</UniqueIdentifier>
     </Filter>
@@ -1276,6 +1291,12 @@
     <ClCompile Include="..\..\..\juce_organicui\juce_organicui2.cpp">
       <Filter>JUCE Modules\juce_organicui</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\juce_quickjs\juce_quickjs.cpp">
+      <Filter>JUCE Modules\juce_quickjs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\juce_quickjs\QuickJSEngine.cpp">
+      <Filter>JUCE Modules\juce_quickjs</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\juce_timeline\resources\timeline_resources\JuceLibraryCode\BinaryData.cpp">
       <Filter>JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode</Filter>
     </ClCompile>
@@ -1532,6 +1553,9 @@
       <Filter>JUCE Library Code</Filter>
     </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_osc.cpp">
+      <Filter>JUCE Library Code</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\include_juce_quickjs.cpp">
       <Filter>JUCE Library Code</Filter>
     </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_timeline.cpp">
@@ -2496,6 +2520,21 @@
     <ClInclude Include="..\..\..\juce_organicui\juce_organicui.h">
       <Filter>JUCE Modules\juce_organicui</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\juce_quickjs\quickjs\quickjs-libc.h">
+      <Filter>JUCE Modules\juce_quickjs\quickjs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\juce_quickjs\quickjs\quickjs.h">
+      <Filter>JUCE Modules\juce_quickjs\quickjs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\juce_quickjs\QuickJSEngine.h">
+      <Filter>JUCE Modules\juce_quickjs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\juce_quickjs\quickjspp.hpp">
+      <Filter>JUCE Modules\juce_quickjs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\juce_quickjs\juce_quickjs.h">
+      <Filter>JUCE Modules\juce_quickjs</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\juce_timeline\resources\timeline_resources\JuceLibraryCode\AppConfig.h">
       <Filter>JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode</Filter>
     </ClInclude>
@@ -2647,6 +2686,12 @@
     </None>
     <None Include="..\..\..\juce_organicui\README.md">
       <Filter>JUCE Modules\juce_organicui</Filter>
+    </None>
+    <None Include="..\..\..\juce_quickjs\libs\Linux\armv8\put_here.txt">
+      <Filter>JUCE Modules\juce_quickjs\libs\Linux\armv8</Filter>
+    </None>
+    <None Include="..\..\..\juce_quickjs\README.md">
+      <Filter>JUCE Modules\juce_quickjs</Filter>
     </None>
     <None Include="..\..\..\juce_timeline\resources\timeline_resources\JuceLibraryCode\ReadMe.txt">
       <Filter>JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode</Filter>

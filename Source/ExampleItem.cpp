@@ -12,7 +12,7 @@
 #include "ExampleManager.h"
 
 ExampleItem::ExampleItem() :
-	BaseItem("Example Item")
+	BaseItem("Example Item",true,true)
 {
 	
 	manager.reset(new ExampleManager());

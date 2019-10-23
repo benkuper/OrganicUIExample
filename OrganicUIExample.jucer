@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT id="PYFe8Z" name="OrganicUIExample" projectType="guiapp" jucerVersion="5.4.5"
-              headerPath="../../Source">
+              headerPath="../../Source" cppLanguageStandard="17">
   <MAINGROUP id="Qom9Cx" name="OrganicUIExample">
     <GROUP id="{F4081600-DFE3-1A58-FEAB-83873C5308F8}" name="Source">
       <GROUP id="{2032906F-0D6E-1B2B-E81E-CD22588F6B80}" name="Timeline">
@@ -69,6 +69,7 @@
         <MODULEPATH id="juce_audio_formats"/>
         <MODULEPATH id="juce_audio_devices"/>
         <MODULEPATH id="juce_audio_basics"/>
+        <MODULEPATH id="juce_quickjs" path="../../JUCE Modules"/>
       </MODULEPATHS>
     </VS2019>
   </EXPORTFORMATS>
@@ -88,6 +89,7 @@
     <MODULE id="juce_opengl" showAllCode="0" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_organicui" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_osc" showAllCode="0" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_quickjs" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_timeline" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_video" showAllCode="0" useLocalCopy="0" useGlobalPath="0"/>
   </MODULES>
