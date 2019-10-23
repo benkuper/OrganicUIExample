@@ -19,6 +19,8 @@ public:
 	ExampleManager();
 	~ExampleManager();
 
+	//Factory<ExampleItem> factory;
+
 	bool itemsAreSelectable;
 
 	ExampleItem * createItem() override;

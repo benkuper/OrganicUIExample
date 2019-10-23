@@ -23,8 +23,8 @@ public:
 	void initialiseInternal(const String& commandLine) override
 	{
 		//
-		engine = new ExampleEngine();
-		mainComponent = new MainComponent();
+		engine.reset(new ExampleEngine());
+		mainComponent.reset(new MainComponent());
 	}
 };
 

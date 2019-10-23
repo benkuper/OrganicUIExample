@@ -22,8 +22,8 @@ ParametersLayerBlock::ParametersLayerBlock(float _time, ParametersLayer * layer)
 	time = addFloatParameter("Start Time", "Time of the start of the clip", _time, 0, 3600);
 	time->defaultUI = FloatParameter::TIME;
 
-	clipLength = addFloatParameter("Length", "Length of the clip (in seconds)", 10, .1f, 3600);
-	clipLength->defaultUI = FloatParameter::TIME;
+	blockLength = addFloatParameter("Length", "Length of the clip (in seconds)", 10, .1f, 3600);
+	blockLength->defaultUI = FloatParameter::TIME;
 
 	syncTracks();
 }
@@ -63,7 +63,7 @@ void ParametersLayerBlock::syncTracks()
 
 void ParametersLayerBlock::addTrackForContainer(AnimatedParameterContainer * container)
 {
-	AnimatedParameterContainerTrack * t = new AnimatedParameterContainerTrack(container);
+	AnimatedParameterContainerTrack * t = new AnimatedParameterContainerTrack(container, blockLength->floatValue());
 	containerTracks.add(t); 
 	addChildControllableContainer(t);
 }
@@ -72,6 +72,18 @@ void ParametersLayerBlock::removeContainerTrack(AnimatedParameterContainerTrack 
 {
 	removeChildControllableContainer(containerTrack);
 	containerTracks.removeObject(containerTrack);
+}
+
+void ParametersLayerBlock::onContainerParameterChangedInternal(Parameter * p)
+{
+	BaseItem::onContainerParameterChangedInternal(p);
+	if (p == blockLength)
+	{
+		for (auto &ct : containerTracks)
+		{
+			ct->setLength(blockLength->floatValue());
+		}
+	}
 }
 
 void ParametersLayerBlock::setIsCurrent(bool value)
@@ -84,5 +96,5 @@ void ParametersLayerBlock::setIsCurrent(bool value)
 
 bool ParametersLayerBlock::isInRange(float _time)
 {
-	return (_time >= time->floatValue() && _time <= time->floatValue() + clipLength->floatValue());
+	return (_time >= time->floatValue() && _time <= time->floatValue() + blockLength->floatValue());
 }

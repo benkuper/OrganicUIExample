@@ -10,15 +10,23 @@
 
 #include "AnimatedParameterContainerTrack.h"
 
-AnimatedParameterContainerTrack::AnimatedParameterContainerTrack(AnimatedParameterContainer * container) :
+AnimatedParameterContainerTrack::AnimatedParameterContainerTrack(AnimatedParameterContainer * container, float length) :
 	ControllableContainer(container->niceName),
-	container(container)
+	container(container),
+	length(length)
 {
 	syncTracks();
 }
 
 AnimatedParameterContainerTrack::~AnimatedParameterContainerTrack()
 {
+}
+
+void AnimatedParameterContainerTrack::setLength(float value)
+{
+	if (length == value) return;
+	length = value;
+	for (auto &t : tracks) t->setLength(length);
 }
 
 void AnimatedParameterContainerTrack::syncTracks()
@@ -54,6 +62,7 @@ void AnimatedParameterContainerTrack::addTrackForParameter(AnimatedParameter * p
 {
 	AnimatedParameterTrack * t = new AnimatedParameterTrack(parameter);
 	tracks.add(t);
+	t->setLength(length);
 	addChildControllableContainer(t);
 }
 

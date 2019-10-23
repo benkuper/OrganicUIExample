@@ -14,6 +14,7 @@ ExampleManagerUI::ExampleManagerUI(ExampleManager * m) :
 	BaseManagerShapeShifterUI(m->niceName,m)
 {
 	addExistingItems();
+
 }
 
 ExampleManagerUI::~ExampleManagerUI()

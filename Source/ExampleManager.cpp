@@ -16,6 +16,7 @@ ExampleManager::ExampleManager() :
 	BaseManager("Example Manager"),
 	itemsAreSelectable(true)
 {
+	//managerFactory = &factory;
 }
 
 ExampleManager::~ExampleManager()

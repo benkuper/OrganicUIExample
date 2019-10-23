@@ -21,7 +21,7 @@ public:
 	~ParametersLayerTimeline();
 
 	ParametersLayer * parametersLayer;
-	ScopedPointer<ParametersLayerBlockManagerUI> bmUI;
+	std::unique_ptr<ParametersLayerBlockManagerUI> bmUI;
 
 	void resized();
 	void updateContent() override;

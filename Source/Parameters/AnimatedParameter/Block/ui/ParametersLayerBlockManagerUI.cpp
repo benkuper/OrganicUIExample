@@ -49,7 +49,7 @@ ParametersLayerBlockUI * ParametersLayerBlockManagerUI::createUIForItem(Paramete
 void ParametersLayerBlockManagerUI::placeBlockUI(ParametersLayerBlockUI * cui)
 {
 	int tx = timeline->getXForTime(cui->block->time->floatValue());
-	int tx2 = timeline->getXForTime(cui->block->time->floatValue() + cui->block->clipLength->floatValue());
+	int tx2 = timeline->getXForTime(cui->block->time->floatValue() + cui->block->blockLength->floatValue());
 	cui->setBounds(tx, 0, tx2 - tx, getHeight());
 }
 
@@ -82,11 +82,12 @@ void ParametersLayerBlockManagerUI::blockUITimeChanged(ParametersLayerBlockUI * 
 
 void ParametersLayerBlockManagerUI::blockUIDragged(ParametersLayerBlockUI * cui, const MouseEvent & e)
 {
-	if (!e.mods.isShiftDown())
+	ParametersLayerBlockUI * bui = dynamic_cast<ParametersLayerBlockUI *>(e.eventComponent);
+	if (bui != nullptr)
 	{
 		float targetTime = cui->timeAtMouseDown + timeline->getTimeForX(e.getOffsetFromDragStart().x, false);
 		cui->block->time->setValue(targetTime);
+		//repaint();
 	}
-
-	repaint();
+	
 }

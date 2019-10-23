@@ -22,7 +22,7 @@ public:
 	virtual ~ParametersLayerBlock();
 
 	FloatParameter * time;
-	FloatParameter * clipLength;
+	FloatParameter * blockLength;
 
 	ParametersLayer * layer;
 
@@ -32,6 +32,8 @@ public:
 
 	void addTrackForContainer(AnimatedParameterContainer * container);
 	void removeContainerTrack(AnimatedParameterContainerTrack * containerTrack);
+
+	void onContainerParameterChangedInternal(Parameter *) override;
 
 	bool isCurrent;
 	void setIsCurrent(bool value);

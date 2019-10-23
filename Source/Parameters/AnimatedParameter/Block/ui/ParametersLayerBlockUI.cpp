@@ -99,7 +99,7 @@ void ParametersLayerBlockUI::mouseUp(const MouseEvent & e)
 
 void ParametersLayerBlockUI::controllableFeedbackUpdateInternal(Controllable * c)
 {
-	if (c == item->time || c == item->clipLength)
+	if (c == item->time || c == item->blockLength)
 	{
 		blockUIListeners.call(&BlockUIListener::blockUITimeChanged, this);
 		repaint();

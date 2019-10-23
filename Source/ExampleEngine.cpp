@@ -10,8 +10,7 @@
 
 #include "ExampleEngine.h"
 #include "ExampleManager.h"
-#include "AutomationLayer.h"
-#include "Parameters/ParametersLayer.h"
+#include "ExampleSequence.h"
 
 ExampleEngine::ExampleEngine() :
 	Engine("Example File",".example")
@@ -19,9 +18,9 @@ ExampleEngine::ExampleEngine() :
 	mainEngine = this;
 	addChildControllableContainer(ExampleManager::getInstance());
 	addChildControllableContainer(SequenceManager::getInstance());
-
-	//SequenceLayerFactory::getInstance()->layerDefs.add(SequenceLayerDefinition::createDef("Automation", &AutomationLayer::create));
-	SequenceLayerFactory::getInstance()->layerDefs.add(SequenceLayerDefinition::createDef("Parameters", &ParametersLayer::create));
+	
+	SequenceManager::getInstance()->managerFactory = &sequenceFactory;
+	sequenceFactory.defs.add(new Factory<Sequence>::Definition("", "Sequence", ExampleSequence::create));
 }
 
 ExampleEngine::~ExampleEngine()

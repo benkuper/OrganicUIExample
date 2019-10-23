@@ -18,6 +18,8 @@ public:
 	ExampleEngine();
 	~ExampleEngine();
 
+	Factory<Sequence> sequenceFactory;
+
 	var getJSONData() override;
 	void loadJSONDataInternalEngine(var data, ProgressTask *) override;
 };

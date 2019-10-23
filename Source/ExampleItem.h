@@ -20,11 +20,17 @@ public:
 	ExampleItem();
 	~ExampleItem();
 
+	Trigger* exampleTrigger;
+	BoolParameter* boolParam;
+	IntParameter* intParam;
 	FloatParameter * param1;
 	FloatParameter * param2;
 	FloatParameter * param3;
+	StringParameter* strParam;
+	TargetParameter * targetParam;
+	ColorParameter* colorParam;
 
-	//ScopedPointer<ExampleManager> manager;
+	std::unique_ptr<ExampleManager> manager;
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;

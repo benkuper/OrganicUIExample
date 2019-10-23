@@ -17,11 +17,15 @@ class AnimatedParameterContainerTrack :
 	public ControllableContainer
 {
 public:
-	AnimatedParameterContainerTrack(AnimatedParameterContainer * container);
+	AnimatedParameterContainerTrack(AnimatedParameterContainer * container, float length);
 	virtual ~AnimatedParameterContainerTrack();
 
 	AnimatedParameterContainer * container;
 	OwnedArray<AnimatedParameterTrack> tracks;
+
+	float length;
+
+	void setLength(float value);
 
 	void syncTracks();
 	void addTrackForParameter(AnimatedParameter * parameter);

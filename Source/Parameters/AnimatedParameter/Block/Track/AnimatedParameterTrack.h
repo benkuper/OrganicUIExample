@@ -21,4 +21,7 @@ public:
 	virtual ~AnimatedParameterTrack();
 
 	AnimatedParameter * parameter;
+	Automation automation;
+
+	void setLength(float value);
 };

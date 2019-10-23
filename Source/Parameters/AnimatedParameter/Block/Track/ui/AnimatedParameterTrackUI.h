@@ -11,6 +11,7 @@
 #pragma once
 
 #include "../AnimatedParameterTrack.h"
+#include "../../../../AutomationKeyframeUI/AutomationKeyframeUI.h"
 
 class AnimatedParameterTrackUI :
 	public Component
@@ -20,6 +21,8 @@ public:
 	~AnimatedParameterTrackUI();
 
 	AnimatedParameterTrack * track;
+	AutomationKeyframeUI kui;
 
 	void paint(Graphics &g) override;
+	void resized() override;
 };

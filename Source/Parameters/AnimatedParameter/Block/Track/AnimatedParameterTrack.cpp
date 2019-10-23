@@ -12,10 +12,18 @@
 
 AnimatedParameterTrack::AnimatedParameterTrack(AnimatedParameter * parameter) :
 	ControllableContainer(parameter->niceName),
-	parameter(parameter)
+	parameter(parameter),
+	automation("Keyframes",nullptr,false,false)
 {
+	addChildControllableContainer(&automation);
+	automation.hideInEditor = true;
 }
 
 AnimatedParameterTrack::~AnimatedParameterTrack()
 {
+}
+
+void AnimatedParameterTrack::setLength(float value)
+{
+	automation.length->setValue(value);
 }
