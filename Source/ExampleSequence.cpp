@@ -10,11 +10,13 @@
 
 #include "ExampleSequence.h"
 #include "BlockLayer.h"
+#include "AutomationLayer.h"
 
 ExampleSequence::ExampleSequence() :
 	Sequence()
 {
 	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", "Blocks", BlockLayer::create, this));
-	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", "Audio", AudioLayer::create, this));
+	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", "Automation", AutomationLayer::create, this));
 	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", "Trigger", TriggerLayer::create, this));
+	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", "Audio", AudioLayer::create, this));
 }

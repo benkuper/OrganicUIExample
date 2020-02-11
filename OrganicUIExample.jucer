@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="PYFe8Z" name="OrganicUIExample" projectType="guiapp" jucerVersion="5.4.5"
+<JUCERPROJECT id="PYFe8Z" name="OrganicUIExample" projectType="guiapp" jucerVersion="5.4.7"
               headerPath="../../Source" cppLanguageStandard="17">
   <MAINGROUP id="Qom9Cx" name="OrganicUIExample">
     <GROUP id="{F4081600-DFE3-1A58-FEAB-83873C5308F8}" name="Source">
       <GROUP id="{2032906F-0D6E-1B2B-E81E-CD22588F6B80}" name="Timeline">
+        <GROUP id="{65482DCF-1D1B-7664-9230-895261684797}" name="Automation">
+          <FILE id="X8s6dB" name="AutomationLayer.cpp" compile="1" resource="0"
+                file="Source/AutomationLayer.cpp"/>
+          <FILE id="HSGOGD" name="AutomationLayer.h" compile="0" resource="0"
+                file="Source/AutomationLayer.h"/>
+          <FILE id="KYhT9w" name="AutomationTimeline.cpp" compile="1" resource="0"
+                file="Source/AutomationTimeline.cpp"/>
+          <FILE id="hGn3T9" name="AutomationTimeline.h" compile="0" resource="0"
+                file="Source/AutomationTimeline.h"/>
+        </GROUP>
         <FILE id="Gc9zUG" name="BlockLayer.cpp" compile="1" resource="0" file="Source/BlockLayer.cpp"/>
         <FILE id="z2ci8E" name="BlockLayer.h" compile="0" resource="0" file="Source/BlockLayer.h"/>
         <FILE id="hFVvd7" name="BlockLayerTimeline.cpp" compile="1" resource="0"
@@ -69,7 +79,6 @@
         <MODULEPATH id="juce_audio_formats"/>
         <MODULEPATH id="juce_audio_devices"/>
         <MODULEPATH id="juce_audio_basics"/>
-        <MODULEPATH id="juce_quickjs" path="../../JUCE Modules"/>
       </MODULEPATHS>
     </VS2019>
   </EXPORTFORMATS>
@@ -89,7 +98,6 @@
     <MODULE id="juce_opengl" showAllCode="0" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_organicui" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_osc" showAllCode="0" useLocalCopy="0" useGlobalPath="0"/>
-    <MODULE id="juce_quickjs" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_timeline" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_video" showAllCode="0" useLocalCopy="0" useGlobalPath="0"/>
   </MODULES>

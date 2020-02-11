@@ -25,12 +25,6 @@ public:
 		//
 		engine.reset(new ExampleEngine());
 		mainComponent.reset(new MainComponent());
-
-		quickjs::QuickJSEngine jsEngine;
-		Result result = Result::ok();
-		var res = jsEngine.evaluate("1 + 2", &result);
-
-		DBG("RES : " + res.toString());
 	}
 };
 

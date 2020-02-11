@@ -15,6 +15,10 @@ ExampleManagerViewUI::ExampleManagerViewUI(ExampleManager * manager) :
   {
 	updatePositionOnDragMove = true;
 	enableSnapping = true;
+
+	setMouseClickGrabsKeyboardFocus(true);
+	setWantsKeyboardFocus(true);
+	setShowPane(true);
   }
 
   ExampleManagerViewUI::~ExampleManagerViewUI()

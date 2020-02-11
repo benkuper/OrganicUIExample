@@ -47,7 +47,7 @@
 
 #define JUCE_USE_DARK_SPLASH_SCREEN 1
 
-#define JUCE_PROJUCER_VERSION 0x50405
+#define JUCE_PROJUCER_VERSION 0x50407
 
 //==============================================================================
 #define JUCE_MODULE_AVAILABLE_juce_audio_basics          1
@@ -65,7 +65,6 @@
 #define JUCE_MODULE_AVAILABLE_juce_opengl                1
 #define JUCE_MODULE_AVAILABLE_juce_organicui             1
 #define JUCE_MODULE_AVAILABLE_juce_osc                   1
-#define JUCE_MODULE_AVAILABLE_juce_quickjs               1
 #define JUCE_MODULE_AVAILABLE_juce_timeline              1
 #define JUCE_MODULE_AVAILABLE_juce_video                 1
 
@@ -217,8 +216,8 @@
 //==============================================================================
 // juce_events flags:
 
-#ifndef    JUCE_EXECUTE_APP_SUSPEND_ON_IOS_BACKGROUND_TASK
- //#define JUCE_EXECUTE_APP_SUSPEND_ON_IOS_BACKGROUND_TASK 0
+#ifndef    JUCE_EXECUTE_APP_SUSPEND_ON_BACKGROUND_TASK
+ //#define JUCE_EXECUTE_APP_SUSPEND_ON_BACKGROUND_TASK 0
 #endif
 
 //==============================================================================
