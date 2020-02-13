@@ -15,9 +15,11 @@
 #include "AutomationTimeline.h"
 
 AutomationLayer::AutomationLayer(Sequence* s, var params) :
-	SequenceLayer(s, "Automation"),
-	automation("Automation", 3)
+	SequenceLayer(s, getTypeString()),
+	automation("Automation", params.getProperty("dimensions",1))
 {
+	saveAndLoadRecursiveData = true;
+
 	itemDataType = "Automation";
 	automation.setLength(s->totalTime->floatValue()); 
 	addChildControllableContainer(&automation);

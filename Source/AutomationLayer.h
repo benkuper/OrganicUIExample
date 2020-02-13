@@ -28,6 +28,7 @@ public:
 	void sequenceCurrentTimeChanged(Sequence* s, float prevTime, bool seeking) override;
 	void sequenceTotalTimeChanged(Sequence* s) override;
 
-	String getTypeString() const override { return "Automation"; }
+
+	String getTypeString() const override { return "Automation"+(automation.numDimensions > 1?" "+String(automation.numDimensions)+"D":""); }
 	static AutomationLayer* create(Sequence* s, var params) { return new AutomationLayer(s, params); }
 };

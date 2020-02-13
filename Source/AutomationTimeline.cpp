@@ -27,7 +27,7 @@ void AutomationTimeline::resized()
 
 void AutomationTimeline::updateContent()
 {
-	//automationUI.updateContent();
+	automationUI.setViewRange(item->sequence->viewStartTime->floatValue(), item->sequence->viewEndTime->floatValue());
 }
 
 bool AutomationTimeline::keyPressed(const KeyPress& e)
