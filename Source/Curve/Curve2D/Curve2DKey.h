@@ -10,7 +10,7 @@
 
 #pragma once
 
-#include "easing/Curve2DEasing.h"
+#include "easing/Easing2D.h"
 
 class Curve2DKey :
     public BaseItem,
@@ -34,8 +34,32 @@ public:
     float getLength() const;
 
     void onContainerParameterChangedInternal(Parameter* p) override;
+    void onExternalParameterValueChanged(Parameter* p) override;
 
     void inspectableDestroyed(Inspectable* i) override;
 
+    void updateEasingKeys();
+    void notifyKeyUpdated();
+
     String getTypeString() const override { return "2DKey"; }
+
+
+    class  Curve2DKeyEvent
+    {
+    public:
+        enum Type {  KEY_UPDATED };
+
+        Curve2DKeyEvent(Type t, Curve2DKey* key) : type(t), key(key) {}
+
+        Type type;
+        Curve2DKey* key;
+    };
+
+    QueuedNotifier<Curve2DKeyEvent> keyNotifier;
+    typedef QueuedNotifier<Curve2DKeyEvent>::Listener AsyncListener;
+
+
+    void addAsyncKeyListener(AsyncListener* newListener) { keyNotifier.addListener(newListener); }
+    void addAsyncCoalescedKeyListener(AsyncListener* newListener) { keyNotifier.addAsyncCoalescedListener(newListener); }
+    void removeAsyncKeyListener(AsyncListener* listener) { keyNotifier.removeListener(listener); }
 };

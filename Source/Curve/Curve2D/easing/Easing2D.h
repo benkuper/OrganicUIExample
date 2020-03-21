@@ -13,7 +13,7 @@
 #include "JuceHeader.h"
 #include "bezier.h"
 
-//class Easing2DUI;
+class Easing2DUI;
 
 class Easing2D :
 	public ControllableContainer
@@ -36,7 +36,7 @@ public:
 	virtual void updateLength() = 0;
 	virtual Rectangle<float> getBounds() = 0;
 
-	//virtual Easing2DUI* createUI() = 0; //must be overriden
+	virtual Easing2DUI* createUI() = 0; //must be overriden
 
 private:
 	WeakReference<Easing2D>::Master masterReference;
@@ -56,7 +56,7 @@ public:
 	void updateLength() override;
 	Rectangle<float> getBounds() override;
 	
-	//Easing2DUI* createUI() override;
+	Easing2DUI* createUI() override;
 };
 
 
@@ -82,5 +82,5 @@ public:
 
 	void onContainerParameterChanged(Parameter* p) override;
 
-	//Easing2DUI* createUI() override;
+	Easing2DUI* createUI() override;
 };

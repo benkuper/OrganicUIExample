@@ -1,14 +1,15 @@
 /*
   ==============================================================================
 
-	Curve2DEasing.cpp
+	Easing2D.cpp
 	Created: 21 Mar 2020 4:06:44pm
 	Author:  bkupe
 
   ==============================================================================
 */
 
-#include "Curve2DEasing.h"
+#include "Easing2D.h"
+#include "ui/Easing2DUI.h"
 
 const String Easing2D::typeNames[Easing2D::TYPE_MAX] = { "Linear", "Bezier" };
 
@@ -17,10 +18,12 @@ Easing2D::Easing2D(Type type) :
 	type(type),
 	length(0)
 {
+	showInspectorOnSelect = false;
 }
 
 Easing2D::~Easing2D()
 {
+	masterReference.clear();
 }
 
 void Easing2D::updateKeys(const Point<float>& _start, const Point<float>& _end, bool updateKeys)
@@ -47,15 +50,13 @@ void LinearEasing2D::updateLength()
 
 Rectangle<float> LinearEasing2D::getBounds()
 {
-	return Rectangle<float>(jmin(start.x, end.x), jmin(start.y, end.y), jmax(start.x, end.x), jmax(start.y, end.y));
+	return Rectangle<float>(Point<float>(jmin(start.x, end.x), jmin(start.y, end.y)), Point<float>(jmax(start.x, end.x), jmax(start.y, end.y)));
 }
 
-/*
 Easing2DUI* LinearEasing2D::createUI()
 {
-	return nullptr;
+	return new LinearEasing2DUI(this);
 }
-*/
 
 CubicEasing2D::CubicEasing2D() :
 	Easing2D(BEZIER)
@@ -128,9 +129,8 @@ void CubicEasing2D::onContainerParameterChanged(Parameter* p)
 {
 }
 
-/*
+
 Easing2DUI* CubicEasing2D::createUI()
 {
-	return nullptr;
+	return new CubicEasing2DUI(this);
 }
-*/

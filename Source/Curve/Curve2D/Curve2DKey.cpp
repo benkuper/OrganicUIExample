@@ -14,14 +14,15 @@ Curve2DKey::Curve2DKey() :
     BaseItem(getTypeString(), false, false),
     easing(nullptr),
     curvePosition(0),
-    nextKey(nullptr)
+    nextKey(nullptr),
+    keyNotifier(1)
 {
     showInspectorOnSelect = false;
 
     easingType = addEnumParameter("Easing Type", "The type of interpolation to use");
     easingType->addOption("Linear", Easing2D::LINEAR, false)->addOption("Bezier", Easing2D::BEZIER);
 
-    easingType->setValueWithData(Easing2D::BEZIER);
+    easingType->setValueWithData(Easing2D::LINEAR);
 
     position = addPoint2DParameter("Position", "The position of the key");
 }
@@ -48,11 +49,7 @@ void Curve2DKey::setEasing(Easing2D::Type type)
     }
 
     easing.reset(e);
-
-    if (easing != nullptr)
-    {
-        if (nextKey != nullptr) easing->updateKeys(viewUIPosition->getPoint(), nextKey->viewUIPosition->getPoint());
-    }
+    updateEasingKeys();
 }
 
 void Curve2DKey::setNextKey(Curve2DKey* key)
@@ -62,20 +59,23 @@ void Curve2DKey::setNextKey(Curve2DKey* key)
     if (nextKey != nullptr)
     {
         nextKey->removeInspectableListener(this);
+        nextKey->position->removeParameterListener(this);
+
     }
 
     nextKey = key;
 
     if (nextKey != nullptr)
     {
-        key->addInspectableListener(this);
-        if(easing != nullptr) easing->updateKeys(viewUIPosition->getPoint(), nextKey->viewUIPosition->getPoint());
+        nextKey->addInspectableListener(this);
+        nextKey->position->addParameterListener(this);
+        updateEasingKeys();
     }
 }
 
 Point<float> Curve2DKey::getValueAt(const float& _position)
 {
-    if (easing == nullptr && easing->length > 0) return viewUIPosition->getPoint();
+    if (easing == nullptr && easing->length > 0) return position->getPoint();
     return easing->getValue(_position / easing->length);
 }
 
@@ -91,9 +91,37 @@ void Curve2DKey::onContainerParameterChangedInternal(Parameter* p)
     {
         setEasing(easingType->getValueDataAsEnum<Easing2D::Type>());
     }
+    else if (p == position)
+    {
+        updateEasingKeys();
+    }
+}
+
+void Curve2DKey::onExternalParameterValueChanged(Parameter* p)
+{
+    BaseItem::onExternalParameterValueChanged(p);
+    if (nextKey != nullptr && p == nextKey->position)
+    {
+        updateEasingKeys();
+    }
 }
 
 void Curve2DKey::inspectableDestroyed(Inspectable* i)
 {
     if (i == nextKey) setNextKey(nullptr);
+}
+
+void Curve2DKey::updateEasingKeys()
+{
+    if (easing != nullptr && nextKey != nullptr)
+    {
+        easing->updateKeys(position->getPoint(), nextKey->position->getPoint());  notifyKeyUpdated();
+    }
+
+    notifyKeyUpdated();
+}
+
+void Curve2DKey::notifyKeyUpdated()
+{
+    keyNotifier.addMessage(new Curve2DKeyEvent(Curve2DKeyEvent::KEY_UPDATED, this));
 }

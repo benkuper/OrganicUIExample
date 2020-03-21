@@ -14,7 +14,8 @@
 #include "Curve2DKeyUI.h"
 
 class Curve2DUI :
-    public BaseManagerViewUI<Curve2D, Curve2DKey, Curve2DKeyUI>
+    public BaseManagerViewUI<Curve2D, Curve2DKey, Curve2DKeyUI>,
+    public Curve2DKey::AsyncListener
 {
 public:
     Curve2DUI(Curve2D * manager);
@@ -22,4 +23,11 @@ public:
 
     void updateViewUIPosition(Curve2DKeyUI * ui) override;
     void mouseDoubleClick(const MouseEvent& e) override;
+
+    void addItemUIInternal(Curve2DKeyUI* ui) override;
+    void removeItemUIInternal(Curve2DKeyUI* ui) override;
+
+    void mouseDrag(const MouseEvent& e) override;
+
+    void newMessage(const Curve2DKey::Curve2DKeyEvent& e) override;
 };

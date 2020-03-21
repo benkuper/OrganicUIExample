@@ -22,6 +22,7 @@ Curve2D::Curve2D(const String &name) :
     canInspectChildContainers = false;
 
     length = addFloatParameter("Length", "The length of the curve", 0, 0);
+    length->hideInEditor = true;
     length->setControllableFeedbackOnly(true);
 }
 

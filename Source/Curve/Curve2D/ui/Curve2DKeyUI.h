@@ -34,12 +34,18 @@ public:
     ~Curve2DKeyUI();
 
     Curve2DKeyHandle handle;
-    //std::unique_ptr<Easing2DUI> ui;
 
     Rectangle<float> valueBounds;
 
+    std::unique_ptr<Easing2DUI> easingUI;
+
     void resized() override;
     void paint(Graphics& g) override;
+
+    void updateEasingUI();
+
+    bool hitTest(int x, int y) override;
+
     void setValueBounds(const Rectangle<float> valueBounds);
     Point<int> getUIPosForValuePos(const Point<float>& valuePos) const;
 };
