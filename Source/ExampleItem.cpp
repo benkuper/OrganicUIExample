@@ -31,7 +31,9 @@ ExampleItem::ExampleItem() :
 	strParam = addStringParameter("String Param", "String param", "Super cool");
 	colorParam = addColorParameter("Color Param", "Color Param", Colours::red);
 	targetParam = addTargetParameter("Target param", "Target Param");
-	
+
+
+	addChildControllableContainer(&curve);
 }
 
 ExampleItem::~ExampleItem()

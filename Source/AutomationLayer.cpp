@@ -16,7 +16,7 @@
 
 AutomationLayer::AutomationLayer(Sequence* s, var params) :
 	SequenceLayer(s, getTypeString()),
-	automation("Automation", params.getProperty("dimensions",1))
+	automation("Automation")
 {
 	saveAndLoadRecursiveData = true;
 

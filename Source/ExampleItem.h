@@ -11,6 +11,8 @@
 #pragma once
 #include "JuceHeader.h"
 
+#include "Curve/Curve2D/Curve2D.h"
+
 class ExampleManager;
 
 class ExampleItem :
@@ -29,6 +31,8 @@ public:
 	StringParameter* strParam;
 	TargetParameter * targetParam;
 	ColorParameter* colorParam;
+
+	Curve2D curve;
 
 	std::unique_ptr<ExampleManager> manager;
 
