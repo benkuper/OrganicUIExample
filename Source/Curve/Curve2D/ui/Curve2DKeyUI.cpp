@@ -106,6 +106,19 @@ Point<int> Curve2DKeyUI::getUIPosForValuePos(const Point<float>& valuePos) const
 void Curve2DKeyUI::controllableFeedbackUpdateInternal(Controllable* c)
 {
 	if (c == item->easingType) updateEasingUI();
+	else if (CubicEasing2D* ce = dynamic_cast<CubicEasing2D*>(c->parentContainer.get()))
+	{
+		if (c == ce->anchor1 || c == ce->anchor2)
+		{
+			keyUIListeners.call(&KeyUIListener::keyEasingHandleMoved, this, true, c == ce->anchor1);
+		}
+	}
+}
+
+bool Curve2DKeyUI::keyPressed(const KeyPress& key, Component* originatingComponent)
+{
+	LOG("Key pressed : " << key.getTextDescriptionWithIcons());
+	return false;
 }
 
 Curve2DKeyHandle::Curve2DKeyHandle(Curve2DKey* key) :

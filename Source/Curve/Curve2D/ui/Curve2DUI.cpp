@@ -27,7 +27,11 @@ Curve2DUI::~Curve2DUI()
 {
     for (auto& ui : itemsUI)
     {
-        if (ui != nullptr && !ui->inspectable.wasObjectDeleted()) ui->item->removeAsyncKeyListener(this);
+        if (ui != nullptr && !ui->inspectable.wasObjectDeleted())
+        {
+            ui->item->removeAsyncKeyListener(this);
+            ui->removeKeyUIListener(this);
+        }
     }
 }
 
@@ -82,12 +86,17 @@ void Curve2DUI::addItemUIInternal(Curve2DKeyUI* ui)
 {
     ui->handle.addMouseListener(this, false);
     ui->item->addAsyncKeyListener(this);
+    ui->addKeyUIListener(this);
 }
 
 void Curve2DUI::removeItemUIInternal(Curve2DKeyUI* ui)
 {
     ui->handle.removeMouseListener(this);
-    if(!ui->inspectable.wasObjectDeleted()) ui->item->removeAsyncKeyListener(this);
+    if (!ui->inspectable.wasObjectDeleted())
+    {
+        ui->item->removeAsyncKeyListener(this);
+        ui->removeKeyUIListener(this);
+    }
 }
 
 void Curve2DUI::mouseDrag(const MouseEvent& e)
@@ -117,6 +126,42 @@ void Curve2DUI::newMessage(const Curve2DKey::Curve2DKeyEvent& e)
         updateHandlesForUI(getUIForItem(e.key), true);
     }
     break;
+    }
+}
+
+void Curve2DUI::keyEasingHandleMoved(Curve2DKeyUI* ui, bool syncOtherHandle, bool isFirst)
+{
+    if (syncOtherHandle)
+    {
+        int index = itemsUI.indexOf(ui);
+        if (isFirst)
+        {
+            if (index > 0)
+            {
+                if (itemsUI[index - 1]->item->easingType->getValueDataAsEnum<Easing2D::Type>() == Easing2D::BEZIER)
+                {
+                    if (CubicEasing2D* ce = dynamic_cast<CubicEasing2D*>(itemsUI[index - 1]->item->easing.get()))
+                    {
+                        CubicEasing2D* e = dynamic_cast<CubicEasing2D*>(ui->item->easing.get());
+                        ce->anchor2->setPoint(-e->anchor1->getPoint());
+                    }
+                }
+            }
+        }
+        else
+        {
+            if (index < itemsUI.size() - 2)
+            {
+                if (itemsUI[index + 1]->item->easingType->getValueDataAsEnum<Easing2D::Type>() == Easing2D::BEZIER)
+                {
+                    if (CubicEasing2D* ce = dynamic_cast<CubicEasing2D*>(itemsUI[index + 1]->item->easing.get()))
+                    {
+                        CubicEasing2D* e = dynamic_cast<CubicEasing2D*>(ui->item->easing.get());
+                        ce->anchor1->setPoint(-e->anchor2->getPoint());
+                    }
+                }
+            }
+        }
     }
 }
 

@@ -16,6 +16,8 @@ Curve2D::Curve2D(const String &name) :
     BaseManager(name),
     showUIInEditor(true)
 {
+    isSelectable = false;
+
     editorCanBeCollapsed = false;
     showInspectorOnSelect = false;
     userCanAddItemsManually = false;

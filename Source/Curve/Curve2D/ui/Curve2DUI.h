@@ -15,7 +15,8 @@
 
 class Curve2DUI :
     public BaseManagerViewUI<Curve2D, Curve2DKey, Curve2DKeyUI>,
-    public Curve2DKey::AsyncListener
+    public Curve2DKey::AsyncListener,
+    public Curve2DKeyUI::KeyUIListener
 {
 public:
     Curve2DUI(Curve2D * manager);
@@ -33,5 +34,7 @@ public:
     void mouseDrag(const MouseEvent& e) override;
 
     void newMessage(const Curve2DKey::Curve2DKeyEvent& e) override;
+
+    void keyEasingHandleMoved(Curve2DKeyUI* ui, bool syncOtherHandle, bool isFirst) override;
 
 };

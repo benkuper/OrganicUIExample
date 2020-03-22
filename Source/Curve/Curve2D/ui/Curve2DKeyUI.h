@@ -27,7 +27,8 @@ public:
 };
 
 class Curve2DKeyUI :
-    public BaseItemMinimalUI<Curve2DKey>
+    public BaseItemMinimalUI<Curve2DKey>,
+    public KeyListener
 {
 public:
     Curve2DKeyUI(Curve2DKey* key);
@@ -38,7 +39,6 @@ public:
     Rectangle<float> valueBounds;
 
     std::unique_ptr<Easing2DUI> easingUI;
-
 
     void resized() override;
     void paint(Graphics& g) override;
@@ -53,4 +53,18 @@ public:
     Point<int> getUIPosForValuePos(const Point<float>& valuePos) const;
 
     void controllableFeedbackUpdateInternal(Controllable* c) override;
+
+    class KeyUIListener
+    {
+    public:
+        virtual ~KeyUIListener() {}
+        virtual void keyEasingHandleMoved(Curve2DKeyUI * key, bool syncWithOtherHandle, bool isFirstHandle) {}
+    };
+
+    ListenerList<KeyUIListener> keyUIListeners;
+    void addKeyUIListener(KeyUIListener* newListener) { keyUIListeners.add(newListener); }
+    void removeKeyUIListener(KeyUIListener* listener) { keyUIListeners.remove(listener); }
+
+    // Inherited via KeyListener
+    virtual bool keyPressed(const KeyPress& key, Component* originatingComponent) override;
 };
