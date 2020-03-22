@@ -16,6 +16,8 @@ Curve2DKeyUI::Curve2DKeyUI(Curve2DKey* key) :
 	handle(key),
 	easingUI(nullptr)
 {
+	bringToFrontOnSelect = false;
+
 	autoDrawContourWhenSelected = false;
 	dragAndDropEnabled = false;
 

@@ -33,6 +33,7 @@ Easing2DUI::~Easing2DUI()
 
 void Easing2DUI::paint(Graphics& g)
 {
+	//g.fillAll(Colours::purple.withAlpha(.2f));
 
 	Colour c = NORMAL_COLOR;
 	if (easing.wasObjectDeleted()) return;
@@ -229,6 +230,10 @@ bool CubicEasing2DUI::hitTest(int tx, int ty)
 	if (showFirstHandle)
 	{
 		result |= h1.getLocalBounds().contains(h1.getMouseXYRelative());
+	}
+
+	if (showLastHandle)
+	{
 		result |= h2.getLocalBounds().contains(h2.getMouseXYRelative());
 	}
 
@@ -330,15 +335,13 @@ void CubicEasing2DUI::mouseDrag(const MouseEvent& e)
 // HANDLES
 Easing2DUI::Easing2DHandle::Easing2DHandle()
 {
-
-	setWantsKeyboardFocus(true);
-	setMouseClickGrabsKeyboardFocus(true); 
-	
 	setRepaintsOnMouseActivity(true);
 }
 
 void Easing2DUI::Easing2DHandle::paint(Graphics& g)
 {
+	//g.fillAll((isMouseOver()?Colours::yellow:Colours::orange).withAlpha(.5f));
+
 	Colour c = LIGHTCONTOUR_COLOR;
 	if (isMouseOver()) c = c.brighter(.8f);
 	g.setColour(c);
