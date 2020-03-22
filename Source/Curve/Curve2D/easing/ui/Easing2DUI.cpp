@@ -307,10 +307,10 @@ void CubicEasing2DUI::setShowEasingHandles(bool showFirst, bool showLast)
 
 void CubicEasing2DUI::mouseDrag(const MouseEvent& e)
 {
+	syncHandles = !e.mods.isAltDown();
+
 	if (e.eventComponent == &h1 || e.eventComponent == &h2)
 	{
-		syncHandles = !e.mods.isAltDown();
-
 		CubicEasing2D* ce = static_cast<CubicEasing2D*>(easing.get());
 
 		Point2DParameter* targetAnchor = (e.eventComponent == &h1) ? ce->anchor1 : ce->anchor2;
