@@ -26,6 +26,14 @@ Curve2D::Curve2D(const String &name) :
     length = addFloatParameter("Length", "The length of the curve", 0, 0);
     length->hideInEditor = true;
     length->setControllableFeedbackOnly(true);
+
+    position = addFloatParameter("Position", "The length of the curve", 0, 0, 1);
+    position->hideInEditor = true;
+   
+    value = addPoint2DParameter("Value", "The current value of the curve at the current position");
+    value->hideInEditor = true;
+    value->setControllableFeedbackOnly(true);
+
 }
 
 Curve2D::~Curve2D()
@@ -58,6 +66,47 @@ void Curve2D::updateCurve()
     }
 
     length->setValue(curLength);
+
+    computeValue();
+}
+
+void Curve2D::computeValue()
+{
+    value->setPoint(getValueAtPosition(position->floatValue() * length->floatValue()));
+}
+
+Curve2DKey* Curve2D::getKeyForPosition(float pos)
+{
+    if (items.size() == 0) return nullptr;
+    if (pos == 0) return items[0];
+
+    for (int i = items.size()-1; i >= 0; i--)
+    {
+        if (items[i]->curvePosition <= pos) return items[i];
+    }
+
+    return nullptr;
+}
+
+Point<float> Curve2D::getValueAtPosition(float pos)
+{
+    if (items.size() == 0) return Point<float>();
+    if (items.size() == 1) return items[0]->position->getPoint();
+    if (pos == length->floatValue())  return items[items.size() - 1]->position->getPoint();
+
+    Curve2DKey* k = getKeyForPosition(pos);
+    if (k == nullptr || k->easing == nullptr) return Point<float>();
+    float normPos = (pos - k->curvePosition) / k->getLength();
+    return k->easing->getValue(normPos);
+}
+
+void Curve2D::onContainerParameterChanged(Parameter* p)
+{
+    BaseManager::onContainerParameterChanged(p);
+    if (p == position)
+    {
+        computeValue();
+    }
 }
 
 void Curve2D::onControllableFeedbackUpdate(ControllableContainer* cc, Controllable* c)

@@ -18,6 +18,7 @@ Curve2DUI::Curve2DUI(Curve2D* manager) :
     maxZoom = 10;
 
     animateItemOnAdd = false;
+    manager->addAsyncContainerListener(this);
 
     addExistingItems(false);
     setSize(100, 300);
@@ -25,6 +26,8 @@ Curve2DUI::Curve2DUI(Curve2D* manager) :
 
 Curve2DUI::~Curve2DUI()
 {
+    if(!inspectable.wasObjectDeleted()) manager->removeAsyncContainerListener(this);
+
     for (auto& ui : itemsUI)
     {
         if (ui != nullptr && !ui->inspectable.wasObjectDeleted())
@@ -33,6 +36,14 @@ Curve2DUI::~Curve2DUI()
             ui->removeKeyUIListener(this);
         }
     }
+}
+
+void Curve2DUI::paintOverChildren(Graphics& g)
+{
+    Point<int> p = getPosInView(manager->value->getPoint());
+
+    g.setColour(GREEN_COLOR);
+    g.drawEllipse(Rectangle<int>(0, 0, 8, 8).withCentre(p).toFloat(), 2);
 }
 
 void Curve2DUI::updateViewUIPosition(Curve2DKeyUI* ui)
@@ -126,6 +137,17 @@ void Curve2DUI::newMessage(const Curve2DKey::Curve2DKeyEvent& e)
         updateHandlesForUI(getUIForItem(e.key), true);
     }
     break;
+    }
+}
+
+void Curve2DUI::newMessage(const ContainerAsyncEvent& e)
+{
+    if (e.type == ContainerAsyncEvent::ControllableFeedbackUpdate)
+    {
+        if (e.targetControllable == manager->value)
+        {
+            repaint();
+        }
     }
 }
 

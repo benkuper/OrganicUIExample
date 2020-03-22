@@ -97,10 +97,15 @@ void CubicEasing2D::updateBezier()
 	Point<float> a2 = end + anchor2->getPoint();
 
 	bezier = Bezier::Bezier<3>({ {start.x, start.y},{a1.x, a1.y},{a2.x,a2.y},{end.x,end.y} });
+
+	updateLength();
 }
 
 Point<float> CubicEasing2D::getValue(const float& weight)
 {
+	if (weight == 0 || length == 0) return start;
+	if (weight == 1) return end;
+
 	Bezier::Point p;
 	p = bezier.valueAt(weight);
 	return Point<float>(p.x, p.y);

@@ -21,8 +21,12 @@ public:
 
 	Curve2D * curve;
 	std::unique_ptr<Curve2DUI> curveUI;
+	std::unique_ptr<FloatSliderUI> positionUI;
+	std::unique_ptr<ParameterUI> valueUI;
 
+	void resizedInternalHeader(juce::Rectangle<int>& r) override;
 	void resizedInternalContent(juce::Rectangle<int> &r) override;
+
 
 private:
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Curve2DEditor)
