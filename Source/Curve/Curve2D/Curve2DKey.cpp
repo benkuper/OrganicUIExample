@@ -15,14 +15,14 @@ Curve2DKey::Curve2DKey() :
     easing(nullptr),
     curvePosition(0),
     nextKey(nullptr),
-    keyNotifier(1)
+    keyNotifier(5)
 {
     showInspectorOnSelect = false;
 
     easingType = addEnumParameter("Easing Type", "The type of interpolation to use");
     easingType->addOption("Linear", Easing2D::LINEAR, false)->addOption("Bezier", Easing2D::BEZIER);
 
-    easingType->setValueWithData(Easing2D::LINEAR);
+    easingType->setValueWithData(Easing2D::BEZIER);
 
     position = addPoint2DParameter("Position", "The position of the key");
 }
@@ -30,6 +30,7 @@ Curve2DKey::Curve2DKey() :
 Curve2DKey::~Curve2DKey()
 {
     setNextKey(nullptr);
+    masterReference.clear();
 }
 
 void Curve2DKey::setEasing(Easing2D::Type type)
@@ -37,6 +38,7 @@ void Curve2DKey::setEasing(Easing2D::Type type)
     if (easing != nullptr)
     {
         if (easing->type == type) return;
+        removeChildControllableContainer(easing.get());
     }
 
     Easing2D* e = nullptr;
@@ -49,6 +51,12 @@ void Curve2DKey::setEasing(Easing2D::Type type)
     }
 
     easing.reset(e);
+
+    if (e != nullptr)
+    {
+        addChildControllableContainer(easing.get());
+    }
+
     updateEasingKeys();
 }
 
@@ -63,6 +71,8 @@ void Curve2DKey::setNextKey(Curve2DKey* key)
 
     }
 
+    Curve2DKey* oldNextkey = nextKey;
+
     nextKey = key;
 
     if (nextKey != nullptr)
@@ -71,6 +81,8 @@ void Curve2DKey::setNextKey(Curve2DKey* key)
         nextKey->position->addParameterListener(this);
         updateEasingKeys();
     }
+
+    keyNotifier.addMessage(new Curve2DKeyEvent(Curve2DKeyEvent::NEXTKEY_CHANGED, this, oldNextkey));
 }
 
 Point<float> Curve2DKey::getValueAt(const float& _position)
@@ -104,6 +116,11 @@ void Curve2DKey::onExternalParameterValueChanged(Parameter* p)
     {
         updateEasingKeys();
     }
+}
+
+void Curve2DKey::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
+{
+    if (cc == easing.get()) notifyKeyUpdated();
 }
 
 void Curve2DKey::inspectableDestroyed(Inspectable* i)

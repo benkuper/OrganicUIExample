@@ -25,6 +25,8 @@ public:
 	Path drawPath;
 	Path hitPath;
 
+	bool showEasingHandles;
+
 	int hitPathPrecision = 10;
 
 	Rectangle<float> valueBounds;
@@ -42,11 +44,14 @@ public:
 
 	bool hitTest(int tx, int ty) override;
 
+	virtual void setShowEasingHandles(bool value);
+
 	virtual void newMessage(const ContainerAsyncEvent& e) override;
 	virtual void easingControllableFeedbackUpdate(Controllable*) {}
 
 	void setValueBounds(const Rectangle<float> valueBounds);
 	Point<int> getUIPosForValuePos(const Point<float>& valuePos) const;
+	Point<float> getValuePosForUIPos(const Point<int>& uiPos) const;
 
 	class Easing2DHandle :
 		public Component
@@ -88,8 +93,9 @@ public:
 	void generatePathInternal() override;
 	void paintInternal(Graphics& g) override;
 
-	void inspectableSelectionChanged(Inspectable*) override;
 	void easingControllableFeedbackUpdate(Controllable*) override;
+
+	void setShowEasingHandles(bool value) override;
 
 	void mouseDrag(const MouseEvent& e) override;
 };

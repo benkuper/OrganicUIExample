@@ -68,6 +68,26 @@ CubicEasing2D::CubicEasing2D() :
 void CubicEasing2D::updateKeys(const Point<float>& _start, const Point<float>& _end, bool updateKeys)
 {
 	Easing2D::updateKeys(_start, _end, false);
+	if (!anchor1->isOverriden)
+	{
+		Point<float> v = (_end - _start) * .3f;
+		var dv;
+		dv.append(v.x);
+		dv.append(v.y);
+		anchor1->setValue(dv);
+		//anchor1->resetValue();
+	}
+
+	if (!anchor2->isOverriden)
+	{
+		Point<float> v = (_start - _end) * .3f;
+		var dv;
+		dv.append(v.x);
+		dv.append(v.y);
+		anchor2->setValue(dv);
+		//anchor2->resetValue();
+	}
+
 	if(updateKeys) updateBezier();
 }
 
@@ -122,13 +142,16 @@ void CubicEasing2D::getBezierLength(Point<float> A, Point<float> B, Point<float>
 
 Rectangle<float> CubicEasing2D::getBounds()
 {
-	return Rectangle<float>();
+	Bezier::AxisAlignedBoundingBox  bbox = bezier.aabb();
+	Array<Point<float>> points;
+	points.add(Point<float>(bbox.minX(),bbox.minY()),Point<float>(bbox.maxX(), bbox.maxY()), anchor1->getPoint()+start, anchor2->getPoint()+end);
+	return Rectangle<float>::findAreaContainingPoints(points.getRawDataPointer(), points.size());
 }
 
 void CubicEasing2D::onContainerParameterChanged(Parameter* p)
 {
+	updateBezier();
 }
-
 
 Easing2DUI* CubicEasing2D::createUI()
 {

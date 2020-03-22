@@ -14,7 +14,8 @@
 
 Easing2DUI::Easing2DUI(Easing2D* e) :
 	InspectableContentComponent(e),
-	easing(e)
+	easing(e),
+	showEasingHandles(false)
 {
 	autoDrawContourWhenSelected = false;
 
@@ -159,12 +160,18 @@ bool Easing2DUI::hitTest(int tx, int ty)
 	return hitPath.contains((float)tx, (float)ty);
 }
 
+void Easing2DUI::setShowEasingHandles(bool value)
+{
+	showEasingHandles = value;
+}
+
 
 void Easing2DUI::newMessage(const ContainerAsyncEvent& e)
 {
 	if (e.type == ContainerAsyncEvent::ControllableFeedbackUpdate)
 	{
 		easingControllableFeedbackUpdate(e.targetControllable);
+		repaint();
 	}
 }
 
@@ -180,6 +187,12 @@ Point<int> Easing2DUI::getUIPosForValuePos(const Point<float>& valuePos) const
 {
 	return getLocalBounds().getRelativePoint((valuePos.x - valueBounds.getX()) / valueBounds.getWidth(), (valuePos.y - valueBounds.getY()) / valueBounds.getHeight());
 }
+
+Point<float> Easing2DUI::getValuePosForUIPos(const Point<int>& uiPos) const
+{
+	return valueBounds.getRelativePoint(uiPos.x * 1.0f / getWidth(), uiPos.y*1.0f / getHeight());
+}
+
 
 
 // EASINGS
@@ -201,8 +214,8 @@ CubicEasing2DUI::CubicEasing2DUI(CubicEasing2D* e) :
 {
 	addChildComponent(h1);
 	addChildComponent(h2);
-	h1.setVisible(easing->isSelected);
-	h2.setVisible(easing->isSelected);
+	h1.setVisible(showEasingHandles);
+	h2.setVisible(showEasingHandles);
 
 	h1.addMouseListener(this, false);
 	h2.addMouseListener(this, false);
@@ -212,7 +225,7 @@ bool CubicEasing2DUI::hitTest(int tx, int ty)
 {
 	bool result = Easing2DUI::hitTest(tx, ty);
 
-	if (easing->isSelected)
+	if (showEasingHandles)
 	{
 		result |= h1.getLocalBounds().contains(h1.getMouseXYRelative());
 		result |= h2.getLocalBounds().contains(h2.getMouseXYRelative());
@@ -229,11 +242,11 @@ void CubicEasing2DUI::resized()
 
 	CubicEasing2D* ce = static_cast<CubicEasing2D*>(easing.get());
 
-	Point<float> a = Point<float>(jmap<float>(ce->anchor1->getPoint().x, p1.x, p2.x), jmap<float>(ce->anchor1->getPoint().y, p1.y, p2.y));
-	Point<float> b = Point<float>(jmap<float>(ce->anchor2->getPoint().x, p1.x, p2.x), jmap<float>(ce->anchor2->getPoint().y, p1.y, p2.y));
+	Point<int> a = getUIPosForValuePos(easing->start + ce->anchor1->getPoint());
+	Point<int> b = getUIPosForValuePos(easing->end + ce->anchor2->getPoint());
 
-	h1.setBounds(juce::Rectangle<int>(0, 0, 16, 16).withCentre(a.toInt()));
-	h2.setBounds(juce::Rectangle<int>(0, 0, 16, 16).withCentre(b.toInt()));
+	h1.setBounds(juce::Rectangle<int>(0, 0, 16, 16).withCentre(a));
+	h2.setBounds(juce::Rectangle<int>(0, 0, 16, 16).withCentre(b));
 
 	Easing2DUI::resized();
 }
@@ -245,15 +258,15 @@ void CubicEasing2DUI::generatePathInternal()
 
 	CubicEasing2D* ce = static_cast<CubicEasing2D*>(easing.get());
 
-	Point<float> a = Point<float>(jmap<float>(ce->anchor1->getPoint().x, p1.x, p2.x), jmap<float>(ce->anchor1->getPoint().y, p1.y, p2.y));
-	Point<float> b = Point<float>(jmap<float>(ce->anchor2->getPoint().x, p1.x, p2.x), jmap<float>(ce->anchor2->getPoint().y, p1.y, p2.y));
+	Point<int> a = getUIPosForValuePos(easing->start + ce->anchor1->getPoint());
+	Point<int> b = getUIPosForValuePos(easing->end + ce->anchor2->getPoint());
 
-	drawPath.cubicTo(a, b, p2.toFloat());
+	drawPath.cubicTo(a.toFloat(), b.toFloat(), p2.toFloat());
 }
 
 void CubicEasing2DUI::paintInternal(Graphics& g)
 {
-	if (!easing->isSelected) return;
+	if (!showEasingHandles) return;
 
 	Point<int> p1 = Point<int>(getUIPosForValuePos(easing->start));
 	Point<int> p2 = Point<int>(getUIPosForValuePos(easing->end));
@@ -267,15 +280,6 @@ void CubicEasing2DUI::paintInternal(Graphics& g)
 
 }
 
-void CubicEasing2DUI::inspectableSelectionChanged(Inspectable*)
-{
-	if (easing.wasObjectDeleted()) return;
-	h1.setVisible(easing->isSelected);
-	h2.setVisible(easing->isSelected);
-	resized();
-	repaint();
-}
-
 void CubicEasing2DUI::easingControllableFeedbackUpdate(Controllable* c)
 {
 	CubicEasing2D* ce = static_cast<CubicEasing2D*>(easing.get());
@@ -286,6 +290,15 @@ void CubicEasing2DUI::easingControllableFeedbackUpdate(Controllable* c)
 	}
 }
 
+void CubicEasing2DUI::setShowEasingHandles(bool value)
+{
+	Easing2DUI::setShowEasingHandles(value);
+	h1.setVisible(showEasingHandles);
+	h2.setVisible(showEasingHandles);
+	resized();
+	repaint();
+}
+
 void CubicEasing2DUI::mouseDrag(const MouseEvent& e)
 {
 	if (e.eventComponent == &h1 || e.eventComponent == &h2)
@@ -293,54 +306,25 @@ void CubicEasing2DUI::mouseDrag(const MouseEvent& e)
 		CubicEasing2D* ce = static_cast<CubicEasing2D*>(easing.get());
 
 		Point2DParameter* targetAnchor = (e.eventComponent == &h1) ? ce->anchor1 : ce->anchor2;
-		Point<int> mp = e.getEventRelativeTo(this).getPosition();
+		Point<float> targetRefPoint = (e.eventComponent == &h1) ? ce->start : ce->end;
 
-		//to adapt
-		//Point<float> targetPoint = Point<float>(mp.x * 1.f / getWidth(), jmap<float>(mp.y, y1, y2, 0, 1));
-		//targetAnchor->setPoint(targetPoint);
+		Point<float> targetPoint = getValuePosForUIPos(e.getEventRelativeTo(this).getPosition()); //Point<float>(mp.x * 1.f / getWidth(), jmap<float>(mp.y, y1, y2, 0, 1));
+		targetAnchor->setPoint(targetPoint - targetRefPoint);
 	}
 	else
 	{
 		CubicEasing2D* ce = static_cast<CubicEasing2D*>(easing.get());
 
-		Point<int> p1 = Point<int>(getUIPosForValuePos(easing->start));
-		Point<int> p2 = Point<int>(getUIPosForValuePos(easing->end));
-		Point<int> mp = e.getEventRelativeTo(this).getPosition();
-		Point<int> mp1;
-		Point<int> mp2;
-
-		if (e.mods.isShiftDown())
-		{
-			mp1 = Point<int>(mp.x, p1.y);
-			mp2 = Point<int>(p2.x - mp.x, p2.y);
-		}
-		else if (e.mods.isAltDown())
-		{
-			mp1 = Point<int>(p1.x, mp.y);
-			mp2 = Point<int>(p2.x, p1.y + (p2.y - mp.y));
-		}
-		else
-		{
-			mp1 = (p1 + mp) / 2;
-			mp2 = (p2 + mp) / 2;
-		}
-
-		//to adapt
-		/*
-		Point<float> t1 = Point<float>(mp1.x * 1.f / getWidth(), jmap<float>(mp1.y, y1, y2, 0, 1));
-		Point<float> t2 = Point<float>(mp2.x * 1.f / getWidth(), jmap<float>(mp2.y, y1, y2, 0, 1));
-
-		ce->anchor1->setPoint(t1);
-		ce->anchor2->setPoint(t2);
-		*/
+		Point<int> p1 = getUIPosForValuePos(easing->start);
+		Point<int> p2 = getUIPosForValuePos(easing->end);
+		Point<float> mVal = getValuePosForUIPos(e.getEventRelativeTo(this).getPosition());
+		
+		ce->anchor1->setPoint((mVal - easing->start) / 2);
+		ce->anchor2->setPoint((mVal - easing->end) / 2);
 	}
 }
 
-
-
 // HANDLES
-
-
 Easing2DUI::Easing2DHandle::Easing2DHandle()
 {
 	setRepaintsOnMouseActivity(true);
@@ -351,5 +335,5 @@ void Easing2DUI::Easing2DHandle::paint(Graphics& g)
 	Colour c = LIGHTCONTOUR_COLOR;
 	if (isMouseOver()) c = c.brighter(.8f);
 	g.setColour(c);
-	g.fillEllipse(getLocalBounds().reduced(isMouseOver() ? 3 : 5).toFloat());
+	g.fillEllipse(getLocalBounds().reduced(isMouseOver() ? 4 : 6).toFloat());
 }

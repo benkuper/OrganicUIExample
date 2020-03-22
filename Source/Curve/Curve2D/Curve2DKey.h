@@ -35,11 +35,13 @@ public:
 
     void onContainerParameterChangedInternal(Parameter* p) override;
     void onExternalParameterValueChanged(Parameter* p) override;
+    void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
 
     void inspectableDestroyed(Inspectable* i) override;
 
     void updateEasingKeys();
     void notifyKeyUpdated();
+
 
     String getTypeString() const override { return "2DKey"; }
 
@@ -47,12 +49,13 @@ public:
     class  Curve2DKeyEvent
     {
     public:
-        enum Type {  KEY_UPDATED };
+        enum Type {  KEY_UPDATED, NEXTKEY_CHANGED };
 
-        Curve2DKeyEvent(Type t, Curve2DKey* key) : type(t), key(key) {}
+        Curve2DKeyEvent(Type t, Curve2DKey* key, Curve2DKey * oldNextKey = nullptr) : type(t), key(key), oldNextKey(oldNextKey) {}
 
         Type type;
-        Curve2DKey* key;
+        WeakReference<Curve2DKey> key;
+        WeakReference<Curve2DKey> oldNextKey;
     };
 
     QueuedNotifier<Curve2DKeyEvent> keyNotifier;
@@ -62,4 +65,8 @@ public:
     void addAsyncKeyListener(AsyncListener* newListener) { keyNotifier.addListener(newListener); }
     void addAsyncCoalescedKeyListener(AsyncListener* newListener) { keyNotifier.addAsyncCoalescedListener(newListener); }
     void removeAsyncKeyListener(AsyncListener* listener) { keyNotifier.removeListener(listener); }
+
+private:
+    WeakReference<Curve2DKey>::Master masterReference;
+    friend class WeakReference<Curve2DKey>;
 };

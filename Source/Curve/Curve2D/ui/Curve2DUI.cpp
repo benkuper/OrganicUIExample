@@ -51,13 +51,13 @@ void Curve2DUI::mouseDoubleClick(const MouseEvent& e)
 void Curve2DUI::addItemUIInternal(Curve2DKeyUI* ui)
 {
     ui->handle.addMouseListener(this, false);
-    ui->item->addAsyncCoalescedKeyListener(this);
+    ui->addAsyncCoalescedKeyListener(this);
 }
 
 void Curve2DUI::removeItemUIInternal(Curve2DKeyUI* ui)
 {
     ui->handle.removeMouseListener(this);
-    if(!ui->inspectable.wasObjectDeleted()) ui->item->removeAsyncKeyListener(this);
+    if(!ui->inspectable.wasObjectDeleted()) ui->removeAsyncKeyListener(this);
 }
 
 void Curve2DUI::mouseDrag(const MouseEvent& e)
@@ -72,8 +72,11 @@ void Curve2DUI::mouseDrag(const MouseEvent& e)
     }
 }
 
-void Curve2DUI::newMessage(const Curve2DKey::Curve2DKeyEvent& e)
+void Curve2DUI::newMessage(const Curve2DKeyUI::Curve2DKeyUIEvent& e)
 {
-    updateViewUIPosition(getUIForItem(e.key));
+    if (e.type == Curve2DKeyUI::Curve2DKeyUIEvent::KEYUI_UPDATED)
+    {
+        updateViewUIPosition(e.keyUI);
+    }
 }
 
