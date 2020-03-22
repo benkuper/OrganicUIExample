@@ -15,7 +15,8 @@
 Easing2DUI::Easing2DUI(Easing2D* e) :
 	InspectableContentComponent(e),
 	easing(e),
-	showEasingHandles(false)
+	showFirstHandle(false),
+	showLastHandle(false)
 {
 	autoDrawContourWhenSelected = false;
 
@@ -157,12 +158,17 @@ void Easing2DUI::buildHitPath()
 
 bool Easing2DUI::hitTest(int tx, int ty)
 {
-	return hitPath.contains((float)tx, (float)ty);
+	Point<int> p(tx, ty);
+	Point<int> p1 = Point<int>(getUIPosForValuePos(easing->start));
+	Point<int> p2 = Point<int>(getUIPosForValuePos(easing->end));
+	
+	return p.getDistanceFrom(p1) > 16 && p.getDistanceFrom(p2) > 16 && hitPath.contains((float)tx, (float)ty);
 }
 
-void Easing2DUI::setShowEasingHandles(bool value)
+void Easing2DUI::setShowEasingHandles(bool showFirst, bool showLast)
 {
-	showEasingHandles = value;
+	showFirstHandle = showFirst;
+	showLastHandle = showLast;
 }
 
 
@@ -214,8 +220,8 @@ CubicEasing2DUI::CubicEasing2DUI(CubicEasing2D* e) :
 {
 	addChildComponent(h1);
 	addChildComponent(h2);
-	h1.setVisible(showEasingHandles);
-	h2.setVisible(showEasingHandles);
+	h1.setVisible(showFirstHandle);
+	h2.setVisible(showLastHandle);
 
 	h1.addMouseListener(this, false);
 	h2.addMouseListener(this, false);
@@ -225,7 +231,7 @@ bool CubicEasing2DUI::hitTest(int tx, int ty)
 {
 	bool result = Easing2DUI::hitTest(tx, ty);
 
-	if (showEasingHandles)
+	if (showFirstHandle)
 	{
 		result |= h1.getLocalBounds().contains(h1.getMouseXYRelative());
 		result |= h2.getLocalBounds().contains(h2.getMouseXYRelative());
@@ -266,7 +272,7 @@ void CubicEasing2DUI::generatePathInternal()
 
 void CubicEasing2DUI::paintInternal(Graphics& g)
 {
-	if (!showEasingHandles) return;
+	if (!showFirstHandle && !showLastHandle) return;
 
 	Point<int> p1 = Point<int>(getUIPosForValuePos(easing->start));
 	Point<int> p2 = Point<int>(getUIPosForValuePos(easing->end));
@@ -275,8 +281,8 @@ void CubicEasing2DUI::paintInternal(Graphics& g)
 	if (isMouseOver()) c = c.brighter();
 	g.setColour(c);
 
-	g.drawLine(p1.x, p1.y, h1.getBounds().getCentreX(), h1.getBounds().getCentreY());
-	g.drawLine(p2.x, p2.y, h2.getBounds().getCentreX(), h2.getBounds().getCentreY());
+	if(showFirstHandle) g.drawLine(p1.x, p1.y, h1.getBounds().getCentreX(), h1.getBounds().getCentreY());
+	if(showLastHandle) g.drawLine(p2.x, p2.y, h2.getBounds().getCentreX(), h2.getBounds().getCentreY());
 
 }
 
@@ -290,11 +296,11 @@ void CubicEasing2DUI::easingControllableFeedbackUpdate(Controllable* c)
 	}
 }
 
-void CubicEasing2DUI::setShowEasingHandles(bool value)
+void CubicEasing2DUI::setShowEasingHandles(bool showFirst, bool showLast)
 {
-	Easing2DUI::setShowEasingHandles(value);
-	h1.setVisible(showEasingHandles);
-	h2.setVisible(showEasingHandles);
+	Easing2DUI::setShowEasingHandles(showFirst, showLast);
+	h1.setVisible(showFirstHandle);
+	h2.setVisible(showLastHandle);
 	resized();
 	repaint();
 }

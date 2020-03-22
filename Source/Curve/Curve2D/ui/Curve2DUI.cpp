@@ -25,6 +25,10 @@ Curve2DUI::Curve2DUI(Curve2D* manager) :
 
 Curve2DUI::~Curve2DUI()
 {
+    for (auto& ui : itemsUI)
+    {
+        if (ui != nullptr && !ui->inspectable.wasObjectDeleted()) ui->item->removeAsyncKeyListener(this);
+    }
 }
 
 void Curve2DUI::updateViewUIPosition(Curve2DKeyUI* ui)
@@ -35,6 +39,32 @@ void Curve2DUI::updateViewUIPosition(Curve2DKeyUI* ui)
     pr.expand(5, 5);
     ui->setBounds(pr);
     ui->setValueBounds(getViewBounds(pr));
+}
+
+void Curve2DUI::updateHandlesForUI(Curve2DKeyUI* ui, bool checkSideItems)
+{
+    if (ui == nullptr) return;
+
+    int index = itemsUI.indexOf(ui);
+    if (checkSideItems)
+    {
+        if (index > 0)  updateHandlesForUI(itemsUI[index - 1], false);
+        if (index < itemsUI.size() - 1)  updateHandlesForUI(itemsUI[index + 1], false);
+    }
+
+    bool curSelected = ui->item->isThisOrChildSelected();
+    if (curSelected)
+    {
+        ui->setShowEasingHandles(true, true);
+        return;
+    }
+
+
+    bool prevSelected = index > 0 && itemsUI[index - 1] != nullptr && itemsUI[index - 1]->item->isThisOrChildSelected();
+    bool nextSelected = index < itemsUI.size() && itemsUI[index + 1] != nullptr && itemsUI[index + 1]->item->isThisOrChildSelected();
+
+    ui->setShowEasingHandles(prevSelected, nextSelected);
+
 }
 
 void Curve2DUI::mouseDoubleClick(const MouseEvent& e)
@@ -51,13 +81,13 @@ void Curve2DUI::mouseDoubleClick(const MouseEvent& e)
 void Curve2DUI::addItemUIInternal(Curve2DKeyUI* ui)
 {
     ui->handle.addMouseListener(this, false);
-    ui->addAsyncCoalescedKeyListener(this);
+    ui->item->addAsyncKeyListener(this);
 }
 
 void Curve2DUI::removeItemUIInternal(Curve2DKeyUI* ui)
 {
     ui->handle.removeMouseListener(this);
-    if(!ui->inspectable.wasObjectDeleted()) ui->removeAsyncKeyListener(this);
+    if(!ui->inspectable.wasObjectDeleted()) ui->item->removeAsyncKeyListener(this);
 }
 
 void Curve2DUI::mouseDrag(const MouseEvent& e)
@@ -72,11 +102,21 @@ void Curve2DUI::mouseDrag(const MouseEvent& e)
     }
 }
 
-void Curve2DUI::newMessage(const Curve2DKeyUI::Curve2DKeyUIEvent& e)
+void Curve2DUI::newMessage(const Curve2DKey::Curve2DKeyEvent& e)
 {
-    if (e.type == Curve2DKeyUI::Curve2DKeyUIEvent::KEYUI_UPDATED)
+    switch (e.type)
     {
-        updateViewUIPosition(e.keyUI);
+    case Curve2DKey::Curve2DKeyEvent::KEY_UPDATED:
+    {
+        updateViewUIPosition(getUIForItem(e.key));
+    }
+    break;
+
+    case Curve2DKey::Curve2DKeyEvent::SELECTION_CHANGED:
+    {
+        updateHandlesForUI(getUIForItem(e.key), true);
+    }
+    break;
     }
 }
 

@@ -25,7 +25,8 @@ public:
 	Path drawPath;
 	Path hitPath;
 
-	bool showEasingHandles;
+	bool showFirstHandle;
+	bool showLastHandle;
 
 	int hitPathPrecision = 10;
 
@@ -38,13 +39,13 @@ public:
 	void generatePath();
 	virtual void generatePathInternal();
 
-	void autoGeneratePathWithPrecision(int precision = 100);
+	void autoGeneratePathWithPrecision(int precision = 50);
 
 	void buildHitPath();
 
 	bool hitTest(int tx, int ty) override;
 
-	virtual void setShowEasingHandles(bool value);
+	virtual void setShowEasingHandles(bool showFirst, bool showLast);
 
 	virtual void newMessage(const ContainerAsyncEvent& e) override;
 	virtual void easingControllableFeedbackUpdate(Controllable*) {}
@@ -95,7 +96,7 @@ public:
 
 	void easingControllableFeedbackUpdate(Controllable*) override;
 
-	void setShowEasingHandles(bool value) override;
+	void setShowEasingHandles(bool showFirst, bool showLast) override;
 
 	void mouseDrag(const MouseEvent& e) override;
 };

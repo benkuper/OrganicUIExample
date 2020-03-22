@@ -15,7 +15,7 @@ Curve2DKey::Curve2DKey() :
     easing(nullptr),
     curvePosition(0),
     nextKey(nullptr),
-    keyNotifier(5)
+    keyNotifier(8)
 {
     showInspectorOnSelect = false;
 
@@ -30,6 +30,7 @@ Curve2DKey::Curve2DKey() :
 Curve2DKey::~Curve2DKey()
 {
     setNextKey(nullptr);
+    if (easing != nullptr) easing->removeInspectableListener(this);
     masterReference.clear();
 }
 
@@ -38,6 +39,7 @@ void Curve2DKey::setEasing(Easing2D::Type type)
     if (easing != nullptr)
     {
         if (easing->type == type) return;
+        easing->removeInspectableListener(this);
         removeChildControllableContainer(easing.get());
     }
 
@@ -54,6 +56,7 @@ void Curve2DKey::setEasing(Easing2D::Type type)
 
     if (e != nullptr)
     {
+        easing->addInspectableListener(this);
         addChildControllableContainer(easing.get());
     }
 
@@ -66,23 +69,17 @@ void Curve2DKey::setNextKey(Curve2DKey* key)
 
     if (nextKey != nullptr)
     {
-        nextKey->removeInspectableListener(this);
         nextKey->position->removeParameterListener(this);
 
     }
-
-    Curve2DKey* oldNextkey = nextKey;
 
     nextKey = key;
 
     if (nextKey != nullptr)
     {
-        nextKey->addInspectableListener(this);
         nextKey->position->addParameterListener(this);
         updateEasingKeys();
     }
-
-    keyNotifier.addMessage(new Curve2DKeyEvent(Curve2DKeyEvent::NEXTKEY_CHANGED, this, oldNextkey));
 }
 
 Point<float> Curve2DKey::getValueAt(const float& _position)
@@ -123,9 +120,26 @@ void Curve2DKey::onControllableFeedbackUpdateInternal(ControllableContainer* cc,
     if (cc == easing.get()) notifyKeyUpdated();
 }
 
+void Curve2DKey::inspectableSelectionChanged(Inspectable* i)
+{
+    if (Engine::mainEngine->isClearing || isClearing) return;
+    keyNotifier.addMessage(new Curve2DKeyEvent(Curve2DKeyEvent::SELECTION_CHANGED, this));
+}
+
+void Curve2DKey::setSelectedInternal(bool)
+{
+    if (Engine::mainEngine->isClearing || isClearing) return;
+    keyNotifier.addMessage(new Curve2DKeyEvent(Curve2DKeyEvent::SELECTION_CHANGED, this));
+}
+
 void Curve2DKey::inspectableDestroyed(Inspectable* i)
 {
     if (i == nextKey) setNextKey(nullptr);
+}
+
+bool Curve2DKey::isThisOrChildSelected()
+{
+    return (isSelected || (easing != nullptr && easing->isSelected));
 }
 
 void Curve2DKey::updateEasingKeys()

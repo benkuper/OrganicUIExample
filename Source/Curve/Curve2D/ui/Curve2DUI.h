@@ -15,13 +15,16 @@
 
 class Curve2DUI :
     public BaseManagerViewUI<Curve2D, Curve2DKey, Curve2DKeyUI>,
-    public Curve2DKeyUI::AsyncListener
+    public Curve2DKey::AsyncListener
 {
 public:
     Curve2DUI(Curve2D * manager);
     ~Curve2DUI();
 
     void updateViewUIPosition(Curve2DKeyUI * ui) override;
+
+    void updateHandlesForUI(Curve2DKeyUI* ui, bool checkSideItems);
+
     void mouseDoubleClick(const MouseEvent& e) override;
 
     void addItemUIInternal(Curve2DKeyUI* ui) override;
@@ -29,6 +32,6 @@ public:
 
     void mouseDrag(const MouseEvent& e) override;
 
-    void newMessage(const Curve2DKeyUI::Curve2DKeyUIEvent& e) override;
+    void newMessage(const Curve2DKey::Curve2DKeyEvent& e) override;
 
 };

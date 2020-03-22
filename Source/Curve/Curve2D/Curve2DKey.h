@@ -37,7 +37,12 @@ public:
     void onExternalParameterValueChanged(Parameter* p) override;
     void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
 
+    void inspectableSelectionChanged(Inspectable* i) override;
+    void setSelectedInternal(bool) override;
+
     void inspectableDestroyed(Inspectable* i) override;
+
+    bool isThisOrChildSelected();
 
     void updateEasingKeys();
     void notifyKeyUpdated();
@@ -49,13 +54,12 @@ public:
     class  Curve2DKeyEvent
     {
     public:
-        enum Type {  KEY_UPDATED, NEXTKEY_CHANGED };
+        enum Type {  KEY_UPDATED, SELECTION_CHANGED };
 
-        Curve2DKeyEvent(Type t, Curve2DKey* key, Curve2DKey * oldNextKey = nullptr) : type(t), key(key), oldNextKey(oldNextKey) {}
+        Curve2DKeyEvent(Type t, Curve2DKey* key) : type(t), key(key) {}
 
         Type type;
         WeakReference<Curve2DKey> key;
-        WeakReference<Curve2DKey> oldNextKey;
     };
 
     QueuedNotifier<Curve2DKeyEvent> keyNotifier;
