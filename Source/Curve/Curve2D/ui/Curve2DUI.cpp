@@ -21,6 +21,7 @@ Curve2DUI::Curve2DUI(Curve2D* manager) :
 
     addExistingItems(false);
     setSize(100, 300);
+    bringToFrontOnSelect = false;
 }
 
 Curve2DUI::~Curve2DUI()

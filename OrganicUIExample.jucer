@@ -4,6 +4,11 @@
               headerPath="../../Source" cppLanguageStandard="17">
   <MAINGROUP id="Qom9Cx" name="OrganicUIExample">
     <GROUP id="{F4081600-DFE3-1A58-FEAB-83873C5308F8}" name="Source">
+      <GROUP id="{D68698A9-C2C0-64BA-BBAE-0FD69B2562A1}" name="Helpers">
+        <FILE id="GV2ibo" name="KeyboardUtil.cpp" compile="1" resource="0"
+              file="Source/Helpers/KeyboardUtil.cpp"/>
+        <FILE id="Phd0cH" name="KeyboardUtil.h" compile="0" resource="0" file="Source/Helpers/KeyboardUtil.h"/>
+      </GROUP>
       <GROUP id="{9C14F4D2-6271-64E1-BCA7-8D063EE65FD7}" name="Curve">
         <GROUP id="{D9E855D2-949D-91B7-D9A5-84F29A6FEE98}" name="Curve2D">
           <GROUP id="{8D39274B-994E-093E-FAC0-81DF64B94A9F}" name="easing">

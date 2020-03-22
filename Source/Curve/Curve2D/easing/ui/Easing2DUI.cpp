@@ -21,8 +21,6 @@ Easing2DUI::Easing2DUI(Easing2D* e) :
 	autoDrawContourWhenSelected = false;
 
 	bringToFrontOnSelect = false;
-	setWantsKeyboardFocus(false);
-	setMouseClickGrabsKeyboardFocus(false);
 
 	setRepaintsOnMouseActivity(true);
 	easing->addAsyncContainerListener(this);
@@ -199,11 +197,7 @@ Point<float> Easing2DUI::getValuePosForUIPos(const Point<int>& uiPos) const
 	return valueBounds.getRelativePoint(uiPos.x * 1.0f / getWidth(), uiPos.y*1.0f / getHeight());
 }
 
-
-
 // EASINGS
-
-
 LinearEasing2DUI::LinearEasing2DUI(LinearEasing2D* e) :
 	Easing2DUI(e)
 {
@@ -216,7 +210,8 @@ void LinearEasing2DUI::generatePathInternal()
 }
 
 CubicEasing2DUI::CubicEasing2DUI(CubicEasing2D* e) :
-	Easing2DUI(e)
+	Easing2DUI(e),
+	syncHandles(false)
 {
 	addChildComponent(h1);
 	addChildComponent(h2);
@@ -309,6 +304,8 @@ void CubicEasing2DUI::mouseDrag(const MouseEvent& e)
 {
 	if (e.eventComponent == &h1 || e.eventComponent == &h2)
 	{
+		syncHandles = !e.mods.isAltDown();
+
 		CubicEasing2D* ce = static_cast<CubicEasing2D*>(easing.get());
 
 		Point2DParameter* targetAnchor = (e.eventComponent == &h1) ? ce->anchor1 : ce->anchor2;
@@ -333,6 +330,10 @@ void CubicEasing2DUI::mouseDrag(const MouseEvent& e)
 // HANDLES
 Easing2DUI::Easing2DHandle::Easing2DHandle()
 {
+
+	setWantsKeyboardFocus(true);
+	setMouseClickGrabsKeyboardFocus(true); 
+	
 	setRepaintsOnMouseActivity(true);
 }
 

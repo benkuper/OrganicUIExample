@@ -11,6 +11,7 @@
 #include "ExampleEngine.h"
 #include "ExampleManager.h"
 #include "ExampleSequence.h"
+#include "Helpers/KeyboardUtil.h"
 
 ExampleEngine::ExampleEngine() :
 	Engine("Example File",".example")
@@ -21,12 +22,15 @@ ExampleEngine::ExampleEngine() :
 	
 	SequenceManager::getInstance()->managerFactory = &sequenceFactory;
 	sequenceFactory.defs.add(new Factory<Sequence>::Definition("", "Sequence", ExampleSequence::create));
+
+	KeyboardUtil::getInstance();
 }
 
 ExampleEngine::~ExampleEngine()
 {
 	ExampleManager::deleteInstance();
 	SequenceManager::deleteInstance();
+	KeyboardUtil::deleteInstance();
 }
 
 var ExampleEngine::getJSONData()

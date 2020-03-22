@@ -27,8 +27,7 @@ public:
 };
 
 class Curve2DKeyUI :
-    public BaseItemMinimalUI<Curve2DKey>,
-    public KeyListener
+    public BaseItemMinimalUI<Curve2DKey>
 {
 public:
     Curve2DKeyUI(Curve2DKey* key);
@@ -58,13 +57,11 @@ public:
     {
     public:
         virtual ~KeyUIListener() {}
-        virtual void keyEasingHandleMoved(Curve2DKeyUI * key, bool syncWithOtherHandle, bool isFirstHandle) {}
+        virtual void keyEasingHandleMoved(Curve2DKeyUI * key, bool syncOtherHandle, bool isFirstHandle) {}
     };
 
     ListenerList<KeyUIListener> keyUIListeners;
     void addKeyUIListener(KeyUIListener* newListener) { keyUIListeners.add(newListener); }
     void removeKeyUIListener(KeyUIListener* listener) { keyUIListeners.remove(listener); }
 
-    // Inherited via KeyListener
-    virtual bool keyPressed(const KeyPress& key, Component* originatingComponent) override;
 };
