@@ -24,9 +24,13 @@ public:
     
     Point2DParameter* value;
 
+    enum ControlMode { MANUAL, AUTOMATION };
+    ControlMode controlMode;
+
     //ui
     bool showUIInEditor;
 
+    void setControlMode(ControlMode mode);
     
     void addItemInternal(Curve2DKey* k, var params) override;
     void removeItemInternal(Curve2DKey* k) override;
@@ -35,6 +39,7 @@ public:
     void computeValue();
 
     Curve2DKey* getKeyForPosition(float pos);
+    Point<float> getValueAtNormalizedPosition(float pos);
     Point<float> getValueAtPosition(float pos);
 
     void onContainerParameterChanged(Parameter* p) override;

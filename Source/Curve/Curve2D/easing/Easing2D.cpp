@@ -33,6 +33,7 @@ void Easing2D::updateKeys(const Point<float>& _start, const Point<float>& _end, 
 	if(updateKeys) updateLength();
 }
 
+
 LinearEasing2D::LinearEasing2D() :
 	Easing2D(LINEAR)
 {
@@ -51,6 +52,23 @@ void LinearEasing2D::updateLength()
 Rectangle<float> LinearEasing2D::getBounds()
 {
 	return Rectangle<float>(Point<float>(jmin(start.x, end.x), jmin(start.y, end.y)), Point<float>(jmax(start.x, end.x), jmax(start.y, end.y)));
+}
+
+Point<float> LinearEasing2D::getClosestPointForPos(Point<float> pos)
+{
+	if (start == end) return start;
+	
+	float dx = end.x-start.x;
+	float dy = end.y - start.y;
+
+	// Calculate the t that minimizes the distance.
+	float t = ((pos.x - start.x) * dx + (pos.y - start.y) * dy) / (dx * dx + dy * dy);
+
+	// See if this represents one of the segment's
+	// end points or a point in the middle.
+	if (t <= 0) return start;
+	else if (t >= 1) return end;
+	else return Point<float>(start.x + t * dx, start.y + t * dy);
 }
 
 Easing2DUI* LinearEasing2D::createUI()
@@ -103,8 +121,8 @@ void CubicEasing2D::updateBezier()
 
 Point<float> CubicEasing2D::getValue(const float& weight)
 {
-	if (weight == 0 || length == 0) return start;
-	if (weight == 1) return end;
+	if (weight <= 0 || length == 0) return start;
+	if (weight >= 1) return end;
 
 	Bezier::Point p;
 	p = bezier.valueAt(weight);
@@ -151,6 +169,26 @@ Rectangle<float> CubicEasing2D::getBounds()
 	Array<Point<float>> points;
 	points.add(Point<float>(bbox.minX(),bbox.minY()),Point<float>(bbox.maxX(), bbox.maxY()), anchor1->getPoint()+start, anchor2->getPoint()+end);
 	return Rectangle<float>::findAreaContainingPoints(points.getRawDataPointer(), points.size());
+}
+
+Point<float> CubicEasing2D::getClosestPointForPos(Point<float> pos)
+{
+	const int precision = length*30;
+	Point<float> closestP;
+	float minDist = INT_MAX;
+	for (int i = 0; i < precision; i++)
+	{
+		Bezier::Point bp = bezier.valueAt(i * 1.0f / precision);
+		Point<float> p(bp.x,bp.y);
+		float dist = p.getDistanceSquaredFrom(pos);
+		if (dist < minDist)
+		{
+			closestP.setXY(p.x, p.y);
+			minDist = dist;
+		}
+	}
+
+	return closestP;
 }
 
 void CubicEasing2D::onContainerParameterChanged(Parameter* p)

@@ -33,6 +33,7 @@ Easing2DUI::~Easing2DUI()
 
 void Easing2DUI::paint(Graphics& g)
 {
+	if (inspectable.wasObjectDeleted()) return;
 	//g.fillAll(Colours::purple.withAlpha(.2f));
 
 	Colour c = NORMAL_COLOR;
@@ -55,6 +56,7 @@ void Easing2DUI::paint(Graphics& g)
 
 void Easing2DUI::resized()
 {
+	if (inspectable.wasObjectDeleted()) return;
 	generatePath();
 }
 
@@ -191,11 +193,13 @@ void Easing2DUI::setValueBounds(const Rectangle<float> _valueBounds)
 
 Point<int> Easing2DUI::getUIPosForValuePos(const Point<float>& valuePos) const
 {
+	if (inspectable.wasObjectDeleted()) return Point<int>();
 	return getLocalBounds().getRelativePoint((valuePos.x - valueBounds.getX()) / valueBounds.getWidth(), (valuePos.y - valueBounds.getY()) / valueBounds.getHeight());
 }
 
 Point<float> Easing2DUI::getValuePosForUIPos(const Point<int>& uiPos) const
 {
+	if (inspectable.wasObjectDeleted()) return Point<float>();
 	return valueBounds.getRelativePoint(uiPos.x * 1.0f / getWidth(), uiPos.y*1.0f / getHeight());
 }
 
@@ -246,6 +250,7 @@ bool CubicEasing2DUI::hitTest(int tx, int ty)
 
 void CubicEasing2DUI::resized()
 {
+	if (inspectable.wasObjectDeleted()) return;
 
 	Point<int> p1 = Point<int>(getUIPosForValuePos(easing->start));
 	Point<int> p2 = Point<int>(getUIPosForValuePos(easing->end));
@@ -306,13 +311,19 @@ void CubicEasing2DUI::setShowEasingHandles(bool showFirst, bool showLast)
 
 void CubicEasing2DUI::mouseDown(const MouseEvent& e)
 {
+	if (inspectable.wasObjectDeleted()) return;
 	Easing2DUI::mouseDown(e);
-	h1ValueAtMouseDown = ce->anchor1->getPoint();
-	h2ValueAtMouseDown = ce->anchor2->getPoint();
+
+	if (!e.mods.isCommandDown())
+	{
+		h1ValueAtMouseDown = ce->anchor1->getPoint();
+		h2ValueAtMouseDown = ce->anchor2->getPoint();
+	}
 }
 
 void CubicEasing2DUI::mouseDrag(const MouseEvent& e)
 {
+	if (inspectable.wasObjectDeleted()) return;
 	syncHandles = !e.mods.isAltDown();
 
 	if (e.eventComponent == &h1 || e.eventComponent == &h2)

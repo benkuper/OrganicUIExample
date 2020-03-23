@@ -23,22 +23,12 @@ Curve2DKeyUI::Curve2DKeyUI(Curve2DKey* key) :
 
 	addAndMakeVisible(&handle);
 
-	if (item->nextKey != nullptr) item->nextKey->addInspectableListener(this);
 	updateEasingUI();
 }
 
 Curve2DKeyUI::~Curve2DKeyUI()
 {
-	if (!inspectable.wasObjectDeleted())
-	{
-		if (item->easing != nullptr) item->easing->removeInspectableListener(this);
-		if (item->nextKey != nullptr)
-		{
-			item->nextKey->removeInspectableListener(this);
-			if (item->nextKey->easing != nullptr) item->nextKey->easing->removeInspectableListener(this);
-		}
-	}
-
+	if (!inspectable.wasObjectDeleted()) if (item->easing != nullptr) item->easing->removeInspectableListener(this);
 }
 
 void Curve2DKeyUI::resized()
@@ -82,6 +72,43 @@ void Curve2DKeyUI::updateEasingUI()
 		easingUI->setValueBounds(valueBounds);
 	}
 
+}
+
+void Curve2DKeyUI::mouseDown(const MouseEvent& e)
+{
+	if (e.eventComponent == easingUI.get())
+	{
+		if (e.mods.isRightButtonDown())
+		{
+			PopupMenu ep;
+			juce::StringArray keys = item->easingType->getAllKeys();
+			int kid = 1;
+			for (auto& i : keys)
+			{
+				ep.addItem(kid, i, true, i == item->easingType->getValueKey());
+				kid++;
+			}
+
+			int result = ep.show();
+			if (result >= 1 && result <= keys.size())
+			{
+				item->easingType->setUndoableValue(item->easingType->value, keys[result - 1]);
+				item->easing->selectThis(); //reselect after changing easing
+			}
+		}
+		else if (e.mods.isCommandDown())
+		{
+			item->easingType->setNext(true, true);
+			item->easing->selectThis(); //reselect after changing easing
+		}
+	}
+}
+
+void Curve2DKeyUI::mouseDoubleClick(const MouseEvent& e)
+{
+	Component* editComponent = new ParameterUI::ValueEditCalloutComponent(item->position);
+	CallOutBox* box = &CallOutBox::launchAsynchronously(editComponent, localAreaToGlobal(getLocalBounds()), nullptr);
+	box->setArrowSize(8);
 }
 
 bool Curve2DKeyUI::hitTest(int x, int y)

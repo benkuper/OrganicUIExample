@@ -4,6 +4,7 @@
               headerPath="../../Source" cppLanguageStandard="17">
   <MAINGROUP id="Qom9Cx" name="OrganicUIExample">
     <GROUP id="{F4081600-DFE3-1A58-FEAB-83873C5308F8}" name="Source">
+      <GROUP id="{DF2E7492-7F46-97E2-70AA-221B30433CF8}" name="New Group"/>
       <GROUP id="{D68698A9-C2C0-64BA-BBAE-0FD69B2562A1}" name="Helpers">
         <FILE id="GV2ibo" name="KeyboardUtil.cpp" compile="1" resource="0"
               file="Source/Helpers/KeyboardUtil.cpp"/>
@@ -38,6 +39,22 @@
         </GROUP>
       </GROUP>
       <GROUP id="{2032906F-0D6E-1B2B-E81E-CD22588F6B80}" name="Timeline">
+        <GROUP id="{D94E6B4F-674F-1AD3-E9E2-3426D2D88213}" name="Mapping2D">
+          <GROUP id="{3704E5CF-C652-00EB-875C-296BB684184D}" name="ui">
+            <FILE id="z0L0za" name="Mapping2DLayerPanel.cpp" compile="1" resource="0"
+                  file="Source/Timeline/Mapping2D/ui/Mapping2DLayerPanel.cpp"/>
+            <FILE id="VGymqH" name="Mapping2DLayerPanel.h" compile="0" resource="0"
+                  file="Source/Timeline/Mapping2D/ui/Mapping2DLayerPanel.h"/>
+            <FILE id="N2w6q7" name="Mapping2DLayerTimeline.cpp" compile="1" resource="0"
+                  file="Source/Timeline/Mapping2D/ui/Mapping2DLayerTimeline.cpp"/>
+            <FILE id="ZxkqyG" name="Mapping2DLayerTimeline.h" compile="0" resource="0"
+                  file="Source/Timeline/Mapping2D/ui/Mapping2DLayerTimeline.h"/>
+          </GROUP>
+          <FILE id="xSWYuh" name="Mapping2DLayer.cpp" compile="1" resource="0"
+                file="Source/Timeline/Mapping2D/Mapping2DLayer.cpp"/>
+          <FILE id="twL1ml" name="Mapping2DLayer.h" compile="0" resource="0"
+                file="Source/Timeline/Mapping2D/Mapping2DLayer.h"/>
+        </GROUP>
         <GROUP id="{65482DCF-1D1B-7664-9230-895261684797}" name="Automation">
           <FILE id="X8s6dB" name="AutomationLayer.cpp" compile="1" resource="0"
                 file="Source/AutomationLayer.cpp"/>

@@ -84,8 +84,10 @@ void Curve2DKey::setNextKey(Curve2DKey* key)
     {
         nextKey->position->addParameterListener(this);
         nextKey->addInspectableListener(this);
-        updateEasingKeys();
     }
+
+    updateEasingKeys();
+
 }
 
 Point<float> Curve2DKey::getValueAt(const float& _position)

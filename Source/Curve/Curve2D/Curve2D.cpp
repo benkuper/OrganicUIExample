@@ -33,12 +33,25 @@ Curve2D::Curve2D(const String &name) :
     value = addPoint2DParameter("Value", "The current value of the curve at the current position");
     value->hideInEditor = true;
     value->setControllableFeedbackOnly(true);
-
 }
 
 Curve2D::~Curve2D()
 {
 
+}
+
+void Curve2D::setControlMode(ControlMode mode)
+{
+    controlMode = mode;
+    position->setControlMode(mode == MANUAL ? Parameter::MANUAL : Parameter::AUTOMATION);
+    if (position->controlMode == Parameter::AUTOMATION)
+    {
+        position->automation->setManualMode(true);
+        position->automation->setLength(length->floatValue(), true);
+        ((Automation*)position->automation->automationContainer)->clear();
+        ((Automation*)position->automation->automationContainer)->addItem(0, 0, false);
+        ((Automation*)position->automation->automationContainer)->addItem(length->floatValue(), 1, false);
+    }
 }
 
 void Curve2D::addItemInternal(Curve2DKey*, var)
@@ -62,7 +75,7 @@ void Curve2D::updateCurve()
     {
         if (i < numItems - 1) items[i]->setNextKey(items[i + 1]);
         items[i]->curvePosition = curLength;
-        curLength += items[i]->getLength();
+        if(i < numItems -1) curLength += items[i]->getLength();
     }
 
     length->setValue(curLength);
@@ -88,6 +101,12 @@ Curve2DKey* Curve2D::getKeyForPosition(float pos)
     return nullptr;
 }
 
+Point<float> Curve2D::getValueAtNormalizedPosition(float pos)
+{
+    return getValueAtPosition(pos * length->floatValue());
+}
+
+
 Point<float> Curve2D::getValueAtPosition(float pos)
 {
     if (items.size() == 0) return Point<float>();
@@ -107,6 +126,7 @@ void Curve2D::onContainerParameterChanged(Parameter* p)
     {
         computeValue();
     }
+
 }
 
 void Curve2D::onControllableFeedbackUpdate(ControllableContainer* cc, Controllable* c)

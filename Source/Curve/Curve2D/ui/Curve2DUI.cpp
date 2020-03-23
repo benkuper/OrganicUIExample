@@ -9,6 +9,7 @@
 */
 
 #include "Curve2DUI.h"
+#include "../easing/ui/Easing2DUI.h"
 
 Curve2DUI::Curve2DUI(Curve2D* manager) :
     BaseManagerViewUI(manager->niceName, manager)
@@ -82,27 +83,16 @@ void Curve2DUI::updateHandlesForUI(Curve2DKeyUI* ui, bool checkSideItems)
 
 }
 
-void Curve2DUI::mouseDoubleClick(const MouseEvent& e)
-{
-    if (e.eventComponent == this)
-    {
-        Point<float> p = getViewMousePosition();
-        Curve2DKey* k = manager->createItem();
-        k->position->setPoint(p);
-        manager->addItem(k);
-    }
-}
-
 void Curve2DUI::addItemUIInternal(Curve2DKeyUI* ui)
 {
-    ui->handle.addMouseListener(this, false);
+    ui->addMouseListener(this, true);
     ui->item->addAsyncKeyListener(this);
     ui->addKeyUIListener(this);
 }
 
 void Curve2DUI::removeItemUIInternal(Curve2DKeyUI* ui)
 {
-    ui->handle.removeMouseListener(this);
+    ui->removeMouseListener(this);
     if (!ui->inspectable.wasObjectDeleted())
     {
         ui->item->removeAsyncKeyListener(this);
@@ -116,9 +106,30 @@ void Curve2DUI::mouseDrag(const MouseEvent& e)
     {
         handle->key->position->setPoint(getViewMousePosition());
     }
-    else
+    else if(e.eventComponent == this)
     {
         BaseManagerViewUI::mouseDrag(e);
+    }
+}
+
+void Curve2DUI::mouseDoubleClick(const MouseEvent& e)
+{
+    if (e.eventComponent == this)
+    {
+        Point<float> p = getViewMousePosition();
+        Curve2DKey* k = manager->createItem();
+        k->position->setPoint(p);
+        manager->addItem(k);
+    }
+    else if (Easing2DUI* eui = dynamic_cast<Easing2DUI*>(e.eventComponent))
+    {
+        Point<float> p = eui->easing->getClosestPointForPos(getViewMousePosition());
+        Curve2DKey* k = manager->createItem();
+        k->position->setPoint(p);
+        var params(new DynamicObject());
+        Curve2DKeyUI* kui = dynamic_cast<Curve2DKeyUI*>(eui->getParentComponent());
+        params.getDynamicObject()->setProperty("index", itemsUI.indexOf(kui)+1);
+        manager->addItem(k, params);
     }
 }
 

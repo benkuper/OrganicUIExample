@@ -29,16 +29,16 @@ public:
 
     void updateHandlesForUI(Curve2DKeyUI* ui, bool checkSideItems);
 
-    void mouseDoubleClick(const MouseEvent& e) override;
 
     void addItemUIInternal(Curve2DKeyUI* ui) override;
     void removeItemUIInternal(Curve2DKeyUI* ui) override;
 
     void mouseDrag(const MouseEvent& e) override;
+    void mouseDoubleClick(const MouseEvent& e) override;
+
 
     void newMessage(const Curve2DKey::Curve2DKeyEvent& e) override;
     void newMessage(const ContainerAsyncEvent& e) override;
 
     void keyEasingHandleMoved(Curve2DKeyUI* ui, bool syncOtherHandle, bool isFirst) override;
-
 };

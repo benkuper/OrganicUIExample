@@ -46,12 +46,16 @@ public:
 
     void updateEasingUI();
 
+    void mouseDown(const MouseEvent& e) override;
+    void mouseDoubleClick(const MouseEvent& e) override;
+
     bool hitTest(int x, int y) override;
 
     void setValueBounds(const Rectangle<float> valueBounds);
     Point<int> getUIPosForValuePos(const Point<float>& valuePos) const;
 
     void controllableFeedbackUpdateInternal(Controllable* c) override;
+
 
     class KeyUIListener
     {
