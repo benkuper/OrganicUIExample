@@ -70,7 +70,7 @@ void Curve2DUI::updateHandlesForUI(Curve2DKeyUI* ui, bool checkSideItems)
     bool curSelected = ui->item->isThisOrChildSelected();
     if (curSelected)
     {
-        ui->setShowEasingHandles(true, true);
+        ui->setShowEasingHandles(true, !ui->item->isSelected);
         return;
     }
 

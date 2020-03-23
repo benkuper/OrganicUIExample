@@ -57,7 +57,7 @@ void Curve2DKeyUI::paint(Graphics& g)
 void Curve2DKeyUI::setShowEasingHandles(bool showFirst, bool showLast)
 {
 	if (inspectable.wasObjectDeleted()) return;
-	if (easingUI != nullptr) easingUI->setShowEasingHandles(showFirst, showLast);
+	if (easingUI != nullptr) easingUI->setShowEasingHandles(showFirst && item->nextKey != nullptr, showLast && item->nextKey != nullptr);
 }
 
 void Curve2DKeyUI::updateEasingUI()

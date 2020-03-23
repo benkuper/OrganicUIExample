@@ -40,9 +40,12 @@ void Easing2DUI::paint(Graphics& g)
 	if (easing->isSelected) c = HIGHLIGHT_COLOR;
 	if (isMouseOver()) c = c.brighter();
 
+	ColourGradient gr;
+	const int precision = 10;
+
 	g.setColour(c);
 	g.strokePath(drawPath, PathStrokeType(isMouseOver() ? 2 : 1));
-
+	
 	//g.setColour(Colours::purple);
 	//g.strokePath(hitPath, PathStrokeType(2));
 
@@ -57,7 +60,6 @@ void Easing2DUI::resized()
 
 void Easing2DUI::generatePath()
 {
-
 	drawPath.clear();
 	drawPath.startNewSubPath(getUIPosForValuePos(easing->start).toFloat());
 
@@ -65,7 +67,6 @@ void Easing2DUI::generatePath()
 
 	generatePathInternal();
 	if (drawPath.getLength()) buildHitPath();
-
 }
 
 void Easing2DUI::generatePathInternal()
@@ -212,6 +213,7 @@ void LinearEasing2DUI::generatePathInternal()
 
 CubicEasing2DUI::CubicEasing2DUI(CubicEasing2D* e) :
 	Easing2DUI(e),
+	ce(e),
 	syncHandles(false)
 {
 	addChildComponent(h1);
@@ -221,6 +223,8 @@ CubicEasing2DUI::CubicEasing2DUI(CubicEasing2D* e) :
 
 	h1.addMouseListener(this, false);
 	h2.addMouseListener(this, false);
+
+
 }
 
 bool CubicEasing2DUI::hitTest(int tx, int ty)
@@ -246,8 +250,6 @@ void CubicEasing2DUI::resized()
 	Point<int> p1 = Point<int>(getUIPosForValuePos(easing->start));
 	Point<int> p2 = Point<int>(getUIPosForValuePos(easing->end));
 
-	CubicEasing2D* ce = static_cast<CubicEasing2D*>(easing.get());
-
 	Point<int> a = getUIPosForValuePos(easing->start + ce->anchor1->getPoint());
 	Point<int> b = getUIPosForValuePos(easing->end + ce->anchor2->getPoint());
 
@@ -262,11 +264,9 @@ void CubicEasing2DUI::generatePathInternal()
 	Point<int> p1 = Point<int>(getUIPosForValuePos(easing->start));
 	Point<int> p2 = Point<int>(getUIPosForValuePos(easing->end));
 
-	CubicEasing2D* ce = static_cast<CubicEasing2D*>(easing.get());
-
 	Point<int> a = getUIPosForValuePos(easing->start + ce->anchor1->getPoint());
 	Point<int> b = getUIPosForValuePos(easing->end + ce->anchor2->getPoint());
-
+	
 	drawPath.cubicTo(a.toFloat(), b.toFloat(), p2.toFloat());
 }
 
@@ -288,7 +288,6 @@ void CubicEasing2DUI::paintInternal(Graphics& g)
 
 void CubicEasing2DUI::easingControllableFeedbackUpdate(Controllable* c)
 {
-	CubicEasing2D* ce = static_cast<CubicEasing2D*>(easing.get());
 	if (c == ce->anchor1 || c == ce->anchor2)
 	{
 		resized();
@@ -305,14 +304,19 @@ void CubicEasing2DUI::setShowEasingHandles(bool showFirst, bool showLast)
 	repaint();
 }
 
+void CubicEasing2DUI::mouseDown(const MouseEvent& e)
+{
+	Easing2DUI::mouseDown(e);
+	h1ValueAtMouseDown = ce->anchor1->getPoint();
+	h2ValueAtMouseDown = ce->anchor2->getPoint();
+}
+
 void CubicEasing2DUI::mouseDrag(const MouseEvent& e)
 {
 	syncHandles = !e.mods.isAltDown();
 
 	if (e.eventComponent == &h1 || e.eventComponent == &h2)
 	{
-		CubicEasing2D* ce = static_cast<CubicEasing2D*>(easing.get());
-
 		Point2DParameter* targetAnchor = (e.eventComponent == &h1) ? ce->anchor1 : ce->anchor2;
 		Point<float> targetRefPoint = (e.eventComponent == &h1) ? ce->start : ce->end;
 
@@ -321,8 +325,6 @@ void CubicEasing2DUI::mouseDrag(const MouseEvent& e)
 	}
 	else
 	{
-		CubicEasing2D* ce = static_cast<CubicEasing2D*>(easing.get());
-
 		Point<int> p1 = getUIPosForValuePos(easing->start);
 		Point<int> p2 = getUIPosForValuePos(easing->end);
 		Point<float> mVal = getValuePosForUIPos(e.getEventRelativeTo(this).getPosition());
@@ -330,6 +332,16 @@ void CubicEasing2DUI::mouseDrag(const MouseEvent& e)
 		ce->anchor1->setPoint((mVal - easing->start) / 2);
 		ce->anchor2->setPoint((mVal - easing->end) / 2);
 	}
+}
+
+void CubicEasing2DUI::mouseUp(const MouseEvent& e)
+{
+	Easing2DUI::mouseUp(e);
+
+	Array<UndoableAction*> actions;
+	actions.add(ce->anchor1->setUndoablePoint(h1ValueAtMouseDown, ce->anchor1->getPoint(), true));
+	actions.add(ce->anchor2->setUndoablePoint(h2ValueAtMouseDown, ce->anchor2->getPoint(), true));
+	UndoMaster::getInstance()->performActions("Move anchors", actions);
 }
 
 // HANDLES
@@ -340,8 +352,6 @@ Easing2DUI::Easing2DHandle::Easing2DHandle()
 
 void Easing2DUI::Easing2DHandle::paint(Graphics& g)
 {
-	//g.fillAll((isMouseOver()?Colours::yellow:Colours::orange).withAlpha(.5f));
-
 	Colour c = LIGHTCONTOUR_COLOR;
 	if (isMouseOver()) c = c.brighter(.8f);
 	g.setColour(c);

@@ -14,7 +14,8 @@
 ExampleItem::ExampleItem() :
 	BaseItem("Example Item",true,true)
 {
-	
+	saveAndLoadRecursiveData = true;
+
 	manager.reset(new ExampleManager());
 	manager->setNiceName("Nested manager");
 	addChildControllableContainer(manager.get());
@@ -39,18 +40,3 @@ ExampleItem::ExampleItem() :
 ExampleItem::~ExampleItem()
 {
 }
-
-
-var ExampleItem::getJSONData()
-{
-	var data = BaseItem::getJSONData();
-	//data.getDynamicObject()->setProperty("manager", manager->getJSONData());
-	return data;
-}
-
-void ExampleItem::loadJSONDataInternal(var data)
-{
-	BaseItem::loadJSONDataInternal(data);
-	//manager->loadJSONData(data.getProperty("manager", var()));
-}
-

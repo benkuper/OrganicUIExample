@@ -41,7 +41,6 @@ public:
 private:
 	WeakReference<Easing2D>::Master masterReference;
 	friend class WeakReference<Easing2D>;
-
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Easing2D)
 
 };

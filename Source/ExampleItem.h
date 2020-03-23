@@ -36,6 +36,4 @@ public:
 
 	std::unique_ptr<ExampleManager> manager;
 
-	var getJSONData() override;
-	void loadJSONDataInternal(var data) override;
 };

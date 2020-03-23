@@ -80,9 +80,13 @@ class CubicEasing2DUI :
 public:
 	CubicEasing2DUI(CubicEasing2D* e);
 
+	CubicEasing2D* ce;
 	Easing2DHandle h1;
 	Easing2DHandle h2;
 	bool syncHandles;
+
+	Point<float> h1ValueAtMouseDown;
+	Point<float> h2ValueAtMouseDown;
 
 	bool hitTest(int tx, int ty) override;
 
@@ -95,5 +99,7 @@ public:
 
 	void setShowEasingHandles(bool showFirst, bool showLast) override;
 
+	void mouseDown(const MouseEvent& e) override;
 	void mouseDrag(const MouseEvent& e) override;
+	void mouseUp(const MouseEvent& e) override;
 };

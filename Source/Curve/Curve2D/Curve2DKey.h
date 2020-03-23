@@ -73,4 +73,6 @@ public:
 private:
     WeakReference<Curve2DKey>::Master masterReference;
     friend class WeakReference<Curve2DKey>;
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Curve2DKey)
 };

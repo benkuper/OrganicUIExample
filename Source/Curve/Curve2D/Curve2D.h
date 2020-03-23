@@ -39,7 +39,7 @@ public:
 
     void onContainerParameterChanged(Parameter* p) override;
     void onControllableFeedbackUpdate(ControllableContainer* cc, Controllable* c) override;
-
+    
     void afterLoadJSONDataInternal() override;
 
     InspectableEditor* getEditor(bool isRoot) override;

@@ -17,20 +17,24 @@ Curve2DKey::Curve2DKey() :
     nextKey(nullptr),
     keyNotifier(8)
 {
+    saveAndLoadRecursiveData = true;
+
     showInspectorOnSelect = false;
+
+    position = addPoint2DParameter("Position", "The position of the key");
 
     easingType = addEnumParameter("Easing Type", "The type of interpolation to use");
     easingType->addOption("Linear", Easing2D::LINEAR, false)->addOption("Bezier", Easing2D::BEZIER);
 
     easingType->setValueWithData(Easing2D::BEZIER);
 
-    position = addPoint2DParameter("Position", "The position of the key");
 }
 
 Curve2DKey::~Curve2DKey()
 {
     setNextKey(nullptr);
     if (easing != nullptr) easing->removeInspectableListener(this);
+    easing.reset();
     masterReference.clear();
 }
 
@@ -70,6 +74,7 @@ void Curve2DKey::setNextKey(Curve2DKey* key)
     if (nextKey != nullptr)
     {
         nextKey->position->removeParameterListener(this);
+        nextKey->removeInspectableListener(this);
 
     }
 
@@ -78,6 +83,7 @@ void Curve2DKey::setNextKey(Curve2DKey* key)
     if (nextKey != nullptr)
     {
         nextKey->position->addParameterListener(this);
+        nextKey->addInspectableListener(this);
         updateEasingKeys();
     }
 }
@@ -144,9 +150,9 @@ bool Curve2DKey::isThisOrChildSelected()
 
 void Curve2DKey::updateEasingKeys()
 {
-    if (easing != nullptr && nextKey != nullptr)
+    if (easing != nullptr)
     {
-        easing->updateKeys(position->getPoint(), nextKey->position->getPoint());  notifyKeyUpdated();
+        easing->updateKeys(position->getPoint(), nextKey != nullptr ? nextKey->position->getPoint():position->getPoint());
     }
 
     notifyKeyUpdated();
