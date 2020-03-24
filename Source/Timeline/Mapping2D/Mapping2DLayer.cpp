@@ -10,6 +10,7 @@
 
 #include "Mapping2DLayer.h"
 #include "ui/Mapping2DLayerTimeline.h"
+#include "ui/Mapping2DLayerPanel.h"
 
 Mapping2DLayer::Mapping2DLayer(Sequence* s, var params) :
 	SequenceLayer(s, getTypeString())
@@ -22,11 +23,18 @@ Mapping2DLayer::Mapping2DLayer(Sequence* s, var params) :
 	curve.length->setValue(s->totalTime->floatValue());
 	curve.setControlMode(Curve2D::AUTOMATION);
 	automation = (Automation *)curve.position->automation->automationContainer;
+
+
 	uiHeight->setValue(100);
 }
 
 Mapping2DLayer::~Mapping2DLayer()
 {
+}
+
+SequenceLayerPanel* Mapping2DLayer::getPanel()
+{
+	return new Mapping2DLayerPanel(this);
 }
 
 SequenceLayerTimeline* Mapping2DLayer::getTimelineUI()

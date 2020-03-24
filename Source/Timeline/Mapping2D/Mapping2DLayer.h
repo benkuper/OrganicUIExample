@@ -21,13 +21,14 @@ public:
 	Curve2D curve;
 	Automation * automation;
 
+
+	SequenceLayerPanel* getPanel() override;
 	SequenceLayerTimeline* getTimelineUI() override;
 
 	void selectAll(bool addToSelection = false) override;
 
 	void sequenceCurrentTimeChanged(Sequence* s, float prevTime, bool seeking) override;
 	void sequenceTotalTimeChanged(Sequence* s) override;
-
 
 	String getTypeString() const override { return "Mapping 2D"; }
 	static Mapping2DLayer* create(Sequence* s, var params) { return new Mapping2DLayer(s, params); }

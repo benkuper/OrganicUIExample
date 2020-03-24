@@ -34,7 +34,7 @@ public:
 
 	virtual Point<float> getValue(const float& weight) = 0;//must be overriden
 	virtual void updateLength() = 0;
-	virtual Rectangle<float> getBounds() = 0;
+	virtual Rectangle<float> getBounds(bool includeHandles = false) = 0;
 	virtual Point<float> getClosestPointForPos(Point<float> pos) = 0;
 	virtual Easing2DUI* createUI() = 0; //must be overriden
 
@@ -53,7 +53,7 @@ public:
 
 	Point<float> getValue(const float& weight) override;
 	void updateLength() override;
-	Rectangle<float> getBounds() override;
+	Rectangle<float> getBounds(bool includeHandles) override;
 	Point<float> getClosestPointForPos(Point<float> pos);
 
 	Easing2DUI* createUI() override;
@@ -78,7 +78,7 @@ public:
 	void updateLength() override;
 	void getBezierLength(Point<float> a, Point<float> b, Point<float> c, Point<float> d, int precision, float& length);
 	
-	Rectangle<float> getBounds() override;
+	Rectangle<float> getBounds(bool includeHandles) override;
 	Point<float> getClosestPointForPos(Point<float> pos);
 
 	void onContainerParameterChanged(Parameter* p) override;

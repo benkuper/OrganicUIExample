@@ -9,3 +9,19 @@
 */
 
 #pragma once
+
+#include "../Mapping2DLayer.h"
+
+class Mapping2DLayerPanel :
+    public SequenceLayerPanel
+{
+public:
+    Mapping2DLayerPanel(Mapping2DLayer* layer);
+    ~Mapping2DLayerPanel();
+
+    Mapping2DLayer* mappingLayer;
+
+    std::unique_ptr<BoolToggleUI> keySyncUI;
+
+    void resizedInternalContent(Rectangle<int>& r) override;
+};

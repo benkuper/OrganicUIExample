@@ -26,4 +26,6 @@ public:
 	void resized() override;
 	void updateContent() override;
 	bool keyPressed(const KeyPress& e) override;
+
+	void controllableFeedbackUpdateInternal(Controllable* c) override;
 };

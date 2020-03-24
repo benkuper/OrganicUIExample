@@ -15,6 +15,7 @@ Curve2DKey::Curve2DKey() :
     easing(nullptr),
     curvePosition(0),
     nextKey(nullptr),
+    isFirst(false),
     keyNotifier(8)
 {
     saveAndLoadRecursiveData = true;

@@ -51,7 +51,7 @@ void Curve2DUI::updateViewUIPosition(Curve2DKeyUI* ui)
 {
     Point<int> p = getPosInView(ui->item->position->getPoint());
     Rectangle<int> pr = Rectangle<int>(0, 0, 20, 20).withCentre(p);
-    if (ui->item->easing != nullptr) pr = pr.getUnion(getBoundsInView(ui->item->easing->getBounds()));
+    if (ui->item->easing != nullptr) pr = pr.getUnion(getBoundsInView(ui->item->easing->getBounds(true)));
     pr.expand(5, 5);
     ui->setBounds(pr);
     ui->setValueBounds(getViewBounds(pr));

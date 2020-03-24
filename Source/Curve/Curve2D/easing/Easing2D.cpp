@@ -49,7 +49,7 @@ void LinearEasing2D::updateLength()
 	length = end.getDistanceFrom(start);
 }
 
-Rectangle<float> LinearEasing2D::getBounds()
+Rectangle<float> LinearEasing2D::getBounds(bool)
 {
 	return Rectangle<float>(Point<float>(jmin(start.x, end.x), jmin(start.y, end.y)), Point<float>(jmax(start.x, end.x), jmax(start.y, end.y)));
 }
@@ -86,7 +86,7 @@ CubicEasing2D::CubicEasing2D() :
 void CubicEasing2D::updateKeys(const Point<float>& _start, const Point<float>& _end, bool updateKeys)
 {
 	Easing2D::updateKeys(_start, _end, false);
-	if (!anchor1->isOverriden)
+	/*if (!anchor1->isOverriden)
 	{
 		Point<float> v = (_end - _start) * .3f;
 		var dv;
@@ -105,7 +105,7 @@ void CubicEasing2D::updateKeys(const Point<float>& _start, const Point<float>& _
 		anchor2->setValue(dv);
 		//anchor2->resetValue();
 	}
-
+	*/
 	if(updateKeys) updateBezier();
 }
 
@@ -163,11 +163,13 @@ void CubicEasing2D::getBezierLength(Point<float> A, Point<float> B, Point<float>
 	}
 }
 
-Rectangle<float> CubicEasing2D::getBounds()
+Rectangle<float> CubicEasing2D::getBounds(bool includeHandles)
 {
 	Bezier::AxisAlignedBoundingBox  bbox = bezier.aabb();
 	Array<Point<float>> points;
-	points.add(Point<float>(bbox.minX(),bbox.minY()),Point<float>(bbox.maxX(), bbox.maxY()), anchor1->getPoint()+start, anchor2->getPoint()+end);
+	points.add(Point<float>(bbox.minX(), bbox.minY()), Point<float>(bbox.maxX(), bbox.maxY()));
+	if(includeHandles) points.add(anchor1->getPoint() + start, anchor2->getPoint() + end);
+
 	return Rectangle<float>::findAreaContainingPoints(points.getRawDataPointer(), points.size());
 }
 

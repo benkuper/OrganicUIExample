@@ -21,11 +21,14 @@ public:
 
     FloatParameter* position;
     FloatParameter* length;
-    
+    Rectangle<float> bounds;
+
     Point2DParameter* value;
 
     enum ControlMode { MANUAL, AUTOMATION };
     ControlMode controlMode;
+
+    BoolParameter* keySyncMode; //only for automation mode
 
     //ui
     bool showUIInEditor;
@@ -35,7 +38,7 @@ public:
     void addItemInternal(Curve2DKey* k, var params) override;
     void removeItemInternal(Curve2DKey* k) override;
 
-    void updateCurve();
+    void updateCurve(bool relativeAutomationKeySyncMode = true);
     void computeValue();
 
     Curve2DKey* getKeyForPosition(float pos);

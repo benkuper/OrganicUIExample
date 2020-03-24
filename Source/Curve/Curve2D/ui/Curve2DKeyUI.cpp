@@ -41,7 +41,6 @@ void Curve2DKeyUI::resized()
 
 void Curve2DKeyUI::paint(Graphics& g)
 {
-	//g.fillAll(Colours::orange.withAlpha(.05f));
 }
 
 void Curve2DKeyUI::setShowEasingHandles(bool showFirst, bool showLast)
@@ -137,9 +136,11 @@ void Curve2DKeyUI::controllableFeedbackUpdateInternal(Controllable* c)
 	if (c == item->easingType) updateEasingUI();
 	else if (CubicEasing2D* ce = dynamic_cast<CubicEasing2D*>(c->parentContainer.get()))
 	{
-		CubicEasing2DUI* eui = dynamic_cast<CubicEasing2DUI*>(easingUI.get());
-		bool isFirst = c == ce->anchor1;
-		keyUIListeners.call(&KeyUIListener::keyEasingHandleMoved, this, eui->syncHandles, isFirst);
+		if (CubicEasing2DUI* eui = dynamic_cast<CubicEasing2DUI*>(easingUI.get()))
+		{
+			bool isFirst = c == ce->anchor1;
+			keyUIListeners.call(&KeyUIListener::keyEasingHandleMoved, this, eui->syncHandles, isFirst);
+		}
 	}
 }
 
@@ -160,7 +161,8 @@ void Curve2DKeyHandle::paint(Graphics& g)
 {
 	if (inspectable.wasObjectDeleted()) return;
 
-	Colour c = key->isSelected ? HIGHLIGHT_COLOR : NORMAL_COLOR;
+	Colour bc = key->isFirst ? GREEN_COLOR : (key->nextKey == nullptr ? YELLOW_COLOR : NORMAL_COLOR);
+	Colour c = key->isSelected ? HIGHLIGHT_COLOR : bc;
 	if (isMouseOverOrDragging()) c = c.brighter(.2f);
 
 	Rectangle<float> r = getLocalBounds().reduced(3).toFloat();
