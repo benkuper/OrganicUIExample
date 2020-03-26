@@ -11,8 +11,6 @@
 #pragma once
 #include "JuceHeader.h"
 
-#include "Curve/Curve2D/Curve2D.h"
-
 class ExampleManager;
 
 class ExampleItem :

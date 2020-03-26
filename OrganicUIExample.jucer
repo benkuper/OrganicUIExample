@@ -10,34 +10,6 @@
               file="Source/Helpers/KeyboardUtil.cpp"/>
         <FILE id="Phd0cH" name="KeyboardUtil.h" compile="0" resource="0" file="Source/Helpers/KeyboardUtil.h"/>
       </GROUP>
-      <GROUP id="{9C14F4D2-6271-64E1-BCA7-8D063EE65FD7}" name="Curve">
-        <GROUP id="{D9E855D2-949D-91B7-D9A5-84F29A6FEE98}" name="Curve2D">
-          <GROUP id="{8D39274B-994E-093E-FAC0-81DF64B94A9F}" name="easing">
-            <GROUP id="{F9FF68C2-567D-5397-FA33-2610BCC3FFC9}" name="ui">
-              <FILE id="LoTnEs" name="Easing2DUI.cpp" compile="1" resource="0" file="Source/Curve/Curve2D/easing/ui/Easing2DUI.cpp"/>
-              <FILE id="PCfMLe" name="Easing2DUI.h" compile="0" resource="0" file="Source/Curve/Curve2D/easing/ui/Easing2DUI.h"/>
-            </GROUP>
-            <GROUP id="{8AA9907C-55CF-DFE3-0589-22BDB95A6D0C}" name="ui"/>
-            <FILE id="yrNX9C" name="bezier.h" compile="0" resource="0" file="Source/Curve/Curve2D/easing/bezier.h"/>
-            <FILE id="cWxIkv" name="Easing2D.cpp" compile="1" resource="0" file="Source/Curve/Curve2D/easing/Easing2D.cpp"/>
-            <FILE id="htXJS1" name="Easing2D.h" compile="0" resource="0" file="Source/Curve/Curve2D/easing/Easing2D.h"/>
-          </GROUP>
-          <GROUP id="{884BD1EA-CF94-DFA6-7BC0-E6159F625D3B}" name="ui">
-            <FILE id="F87WQQ" name="Curve2DEditor.cpp" compile="1" resource="0"
-                  file="Source/Curve/Curve2D/ui/Curve2DEditor.cpp"/>
-            <FILE id="NIdirH" name="Curve2DEditor.h" compile="0" resource="0" file="Source/Curve/Curve2D/ui/Curve2DEditor.h"/>
-            <FILE id="qAvyoH" name="Curve2DKeyUI.cpp" compile="1" resource="0"
-                  file="Source/Curve/Curve2D/ui/Curve2DKeyUI.cpp"/>
-            <FILE id="qZfhzV" name="Curve2DKeyUI.h" compile="0" resource="0" file="Source/Curve/Curve2D/ui/Curve2DKeyUI.h"/>
-            <FILE id="IDyepN" name="Curve2DUI.cpp" compile="1" resource="0" file="Source/Curve/Curve2D/ui/Curve2DUI.cpp"/>
-            <FILE id="te9HPy" name="Curve2DUI.h" compile="0" resource="0" file="Source/Curve/Curve2D/ui/Curve2DUI.h"/>
-          </GROUP>
-          <FILE id="pM4Sca" name="Curve2D.cpp" compile="1" resource="0" file="Source/Curve/Curve2D/Curve2D.cpp"/>
-          <FILE id="Pbb51i" name="Curve2D.h" compile="0" resource="0" file="Source/Curve/Curve2D/Curve2D.h"/>
-          <FILE id="y9NzC4" name="Curve2DKey.cpp" compile="1" resource="0" file="Source/Curve/Curve2D/Curve2DKey.cpp"/>
-          <FILE id="qH7J7W" name="Curve2DKey.h" compile="0" resource="0" file="Source/Curve/Curve2D/Curve2DKey.h"/>
-        </GROUP>
-      </GROUP>
       <GROUP id="{2032906F-0D6E-1B2B-E81E-CD22588F6B80}" name="Timeline">
         <GROUP id="{D94E6B4F-674F-1AD3-E9E2-3426D2D88213}" name="Mapping2D">
           <GROUP id="{3704E5CF-C652-00EB-875C-296BB684184D}" name="ui">

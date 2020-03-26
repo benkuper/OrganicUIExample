@@ -9,7 +9,7 @@
 */
 
 #pragma once
-#include "../../Curve/Curve2D/Curve2D.h"
+#include "JuceHeader.h"
 
 class Mapping2DLayer :
 	public SequenceLayer
@@ -20,7 +20,6 @@ public:
 
 	Curve2D curve;
 	Automation * automation;
-
 
 	SequenceLayerPanel* getPanel() override;
 	SequenceLayerTimeline* getTimelineUI() override;
