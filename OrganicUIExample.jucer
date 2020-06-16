@@ -4,7 +4,6 @@
               headerPath="../../Source" cppLanguageStandard="17">
   <MAINGROUP id="Qom9Cx" name="OrganicUIExample">
     <GROUP id="{F4081600-DFE3-1A58-FEAB-83873C5308F8}" name="Source">
-      <GROUP id="{DF2E7492-7F46-97E2-70AA-221B30433CF8}" name="New Group"/>
       <GROUP id="{D68698A9-C2C0-64BA-BBAE-0FD69B2562A1}" name="Helpers">
         <FILE id="GV2ibo" name="KeyboardUtil.cpp" compile="1" resource="0"
               file="Source/Helpers/KeyboardUtil.cpp"/>

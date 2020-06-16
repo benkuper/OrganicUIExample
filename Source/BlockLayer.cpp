@@ -15,7 +15,6 @@ BlockLayer::BlockLayer(Sequence* s, var params) :
 	SequenceLayer(s, "Blocks"),
 	manager(this)
 {
-	itemDataType = "Blocks";
 	addChildControllableContainer(&manager);
 }
 

@@ -22,4 +22,25 @@ ExampleSequence::ExampleSequence() :
 	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", "Blocks", BlockLayer::create, this));
 	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", "Trigger", TriggerLayer::create, this));
 	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", "Audio", AudioLayer::create, this));
+
+	layerManager->addBaseManagerListener(this);
+}
+
+void ExampleSequence::itemAdded(SequenceLayer* layer)
+{
+	if (TriggerLayer* tl = dynamic_cast<TriggerLayer*>(layer))
+	{
+		tl->setManager(new TimeTriggerManager(tl, this));
+	}
+}
+
+void ExampleSequence::itemsAdded(Array<SequenceLayer*> layers)
+{
+	for (auto& layer : layers)
+	{
+		if (TriggerLayer* tl = dynamic_cast<TriggerLayer*>(layer))
+		{
+			tl->setManager(new TimeTriggerManager(tl, this));
+		}
+	}
 }

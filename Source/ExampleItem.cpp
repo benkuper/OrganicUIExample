@@ -29,10 +29,15 @@ ExampleItem::ExampleItem() :
 	param2 = addFloatParameter("Parameter 2", "Param 2", 0, 0, 10);
 	param3 = addFloatParameter("Parameter 3", "Param 3", 0);
 	intParam = addIntParameter("Int Param", "Int Param", 0, 0, 10);
+	p2dParam = addPoint2DParameter("Point 2D", "Point 2D");
+	p3dParam = addPoint3DParameter("Point 3D", "Point 3D");
+	p2dParam->setBounds(0, 0, 100, 100);
+	p3dParam->setBounds(0, 0, 0, 1, 5, 1);
 	strParam = addStringParameter("String Param", "String param", "Super cool");
 	colorParam = addColorParameter("Color Param", "Color Param", Colours::red);
 	targetParam = addTargetParameter("Target param", "Target Param");
 
+	p2dParam->setPoint(10, 5.5f);
 
 	addChildControllableContainer(&curve);
 }

@@ -19,6 +19,12 @@ AutomationTimeline::AutomationTimeline(AutomationLayer * layer) :
 	resized();
 }
 
+void AutomationTimeline::setSeekManipulationMode(bool isManipulating)
+{
+	SequenceLayerTimeline::setSeekManipulationMode(isManipulating);
+	automationUI.setPreviewMode(isManipulating);
+}
+
 void AutomationTimeline::resized()
 {
 	SequenceLayerTimeline::resized();

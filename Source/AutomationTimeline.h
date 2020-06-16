@@ -19,6 +19,7 @@ public:
 	~AutomationTimeline() {}
 
 	AutomationUI automationUI;
+	void setSeekManipulationMode(bool isManipulating) override;
 
 	void resized() override;
 	void updateContent() override;

@@ -17,13 +17,11 @@ Mapping2DLayer::Mapping2DLayer(Sequence* s, var params) :
 {
 	saveAndLoadRecursiveData = true;
 
-	itemDataType = "Mapping2D";
-
 	addChildControllableContainer(&curve);
 	curve.length->setValue(s->totalTime->floatValue());
 	curve.setControlMode(Curve2D::AUTOMATION);
 	automation = (Automation *)curve.position->automation->automationContainer;
-
+	automation->hideInEditor = true;
 
 	uiHeight->setValue(100);
 }

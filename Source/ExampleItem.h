@@ -26,6 +26,8 @@ public:
 	FloatParameter * param1;
 	FloatParameter * param2;
 	FloatParameter * param3;
+	Point2DParameter* p2dParam;
+	Point3DParameter * p3dParam;
 	StringParameter* strParam;
 	TargetParameter * targetParam;
 	ColorParameter* colorParam;
